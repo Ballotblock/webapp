@@ -7,62 +7,108 @@
       <link rel="stylesheet" type = "text/css" href = "Ballot.css" >
    </head>
    <body>
-       <!--- Top of the page,  a row with logo and login stuff -->
-         <div class="container section">
-            <nav class="level">
-               <!-- Left side -->
-               <div class="level-left">
-                  <div class = "level-item">
-                     <h1 class="title level-item is-1">Ballotblock</h1>
-                  </div>
+      <!--- Top of the page,  a row with logo and login stuff -->
+      <div class="container section">
+         <nav class="level">
+            <!-- Left side -->
+            <div class="level-left">
+               <div class = "level-item">
+                  <h1 class="title level-item is-1">Ballotblock</h1>
                </div>
-               <div class="level-right">
-                  <div class = "level-item">
-                     <!--- Login Informations on the right side -->
-                     <div class="field">
-                        <div class="control">
-                           <input class = "input" type="text" placeholder="Username">
-                        </div>
-                        <div class = "control">
-                           <input class = "input" type="password" placeholder="Password">
-                        </div>
-                        <button class = "button">Login</button>
-                        <button class = "button">Sign Up</button>
+            </div>
+            <div class="level-right">
+               <div class = "level-item">
+                  <!--- Login Informations on the right side -->
+                  <div class="field">
+                     <div class="control">
+                        <input class = "input" type="text" placeholder="Username">
                      </div>
+                     <div class = "control">
+                        <input class = "input" type="password" placeholder="Password">
+                     </div>
+                     <button class = "button">Login</button>
+                     <button class = "button">Sign Up</button>
                   </div>
                </div>
-            </nav>
-         </div>
-         <!--  Navigation Bar -->
-         <nav class="navbar">
-            <a class="navbar-item">My Elections</a>
-            <a class="navbar-item">My Ballots</a>
-            <a class="navbar-item">Create Election</a>
-            <a class="navbar-item">Settings</a>
+            </div>
          </nav>
-       
-       <!----- Content ----->
-<div class = "section">    
-<div class="tile is-ancestor">
-    <div class="tile">
-      <div class="tile is-parent">
-        <article class="tile is-child notification">
-          <p class="title">Pending Votes</p>
-        </article>
-          </div>
-        <div class = "tile is-parent">
-        <article class="tile is-child notification">
-          <p class="title">Saved Votes</p>
-        </article>
       </div>
-      <div class="tile is-parent">
-        <article class="tile is-child notification">
-          <p class="title">Verified Votes</p>
-        </article>
+      <!--  Navigation Bar -->
+      <nav class="navbar">
+         <a class="navbar-item">My Elections</a>
+         <a class="navbar-item">My Ballots</a>
+         <a class="navbar-item">Create Election</a>
+         <a class="navbar-item">Settings</a>
+      </nav>
+      <!----- Content ----->
+      <div class = "section">
+         <div class="tile is-ancestor">
+            <div class="tile">
+               <div class="tile is-parent">
+                  <article class="tile is-child notification">
+                     <p class="title">Pending Votes</p>
+                     <div class = "card">
+                        <header class = "card-header">
+                           <p class = "card-header-title"> Election 1 </p>
+                        </header>
+                        <div class="card-content">
+                           <div class="content"> 
+                              Voted for Candidate 1
+                              <br>
+                              <time datetime="2016-1-1">1 Jan 2016</time>
+                           </div>
+                        </div>
+                     </div>
+                     <div class = "card">
+                        <header class = "card-header">
+                           <p class = "card-header-title"> Election 3 </p>
+                        </header>
+                        <div class="card-content">
+                           <div class="content"> 
+                              Voted for Candidate 3
+                              <br>
+                              <time datetime="2016-4-1">20 April 2016</time>
+                           </div>
+                        </div>
+                     </div>
+                  </article>
+               </div>
+               <div class = "tile is-parent">
+                  <article class="tile is-child notification">
+                     <p class="title">Saved Votes</p>
+                     <div class = "card">
+                        <header class = "card-header">
+                           <p class = "card-header-title"> Election 1 </p>
+                        </header>
+                        <div class="card-content">
+                           <div class="content"> 
+                              Voted for Candidate 1
+                              <br>
+                              <time datetime="2016-1-1">1 Jan 2016</time>
+                           </div>
+                        </div>
+                     </div>
+                  </article>
+               </div>
+               <div class="tile is-parent">
+                  <article class="tile is-child notification">
+                     <p class="title">Verified Votes</p>
+                     <div class = "card">
+                        <header class = "card-header">
+                           <p class = "card-header-title"> Election 1 </p>
+                        </header>
+                        <div class="card-content">
+                           <div class="content"> 
+                              Voted for Candidate 1
+                              <br>
+                              <time datetime="2016-1-1">1 Jan 2016</time>
+                           </div>
+                        </div>
+                     </div>
+                  </article>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
-</div>
-</div>  
-       
    </body>
 </html>
