@@ -3,8 +3,16 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>BallotBlock</title>
+       
+      <!-- Style Sheets -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
       <link rel="stylesheet" type = "text/css" href = "Election.css" >
+       
+      <!-- Scripts for react  , commented out for now since its not yet fully integrated in 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+       -->
    </head>
    <body>
       <!--- Top of the page,  a row with logo and login stuff -->
@@ -27,20 +35,17 @@
                         <input class = "input" type="password" placeholder="Password">
                      </div>
                      <button class = "button">Login</button>
-                     <button class = "button">Sign Up</button>
                   </div>
                </div>
             </div>
          </nav>
       </div>
-       
       <!--  Navigation Bar -->
-         <nav class="navbar">
-            <a class="navbar-item" href = "Election.html">My Elections</a>
-            <a class="navbar-item" href = "Ballot.html">My Ballots</a>
-            <a class="navbar-item" href = "Create.html">Create Election</a>
-            <a class="navbar-item">Settings</a>
-         </nav>
+      <nav class="navbar">
+         <a class="navbar-item">Current Elections</a>
+         <a class="navbar-item">Upcoming Elections</a>
+         <a class="navbar-item">Past Elections</a>
+      </nav>
        
       <!----- Content ----->
       <div class = "section">
@@ -48,7 +53,7 @@
             <div class="column is-4">
                <nav class="panel">
                   <p class="panel-heading">
-                     Elections
+                     Current Elections
                   </p>
                   <div class="panel-block">
                      <p class="control has-icons-left">
@@ -58,12 +63,6 @@
                         </span>
                      </p>
                   </div>
-                  <p class="panel-tabs">
-                     <a class="is-active">all</a>
-                     <a>Voted</a>
-                     <a>Invited</a>
-                     <a> Created</a>
-                  </p>
                   <a class="panel-block is-active">
                   Election 1
                   </a>
@@ -82,22 +81,44 @@
                <table class="table is-fullwidth is-hoverable">
                   <thead>
                      <tr>
-                        <th><abbr>Candidates</abbr></th>
+                        <th><abbr>President</abbr></th>
                         <th><abbr></abbr></th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr>
-                        <th>Candidate 1</th>
-                        <th><button class = "button">Vote</button></th>
+                        <th class = "normalFont" >Candidate 1</th>
+                        <th><input type="radio" name="p"></th>
                      </tr>
                      <tr>
-                        <th>Candidate 2</th>
-                        <th><button class = "button">Vote</button></th>
+                        <th class = "normalFont" >Candidate 2</th>
+                        <th><input type="radio" name="p"></th>
                      </tr>
                      <tr>
-                        <th>Candidate 2</th>
-                        <th><button class = "button">Vote</button></th>
+                        <th class = "normalFont" >Candidate 3</th>
+                        <th><input type="radio" name="p"></th>
+                     </tr>
+                  </tbody>
+               </table>
+               <table class="table is-fullwidth is-hoverable">
+                  <thead>
+                     <tr>
+                        <th><abbr>Vice President</abbr></th>
+                        <th><abbr></abbr></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <th class = "normalFont" >Candidate 1</th>
+                        <th><input type="radio" name="vp"></th>
+                     </tr>
+                     <tr>
+                        <th class = "normalFont" >Candidate 2</th>
+                        <th><input type="radio" name="vp"></th>
+                     </tr>
+                     <tr>
+                        <th class = "normalFont" >Candidate 3</th>
+                        <th><input type="radio" name="vp"></th>
                      </tr>
                   </tbody>
                </table>
