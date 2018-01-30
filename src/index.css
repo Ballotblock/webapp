@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+nav.navbar{
+  box-shadow: 0px 1px 1px black;
+}
+
+.input{
+  margin:1%
+}
+
+.normalFont{
+  font-weight: normal;
+}

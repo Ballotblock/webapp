@@ -1,7 +1,8 @@
 import React from 'react';
+import Cookie from 'react-cookie';
 import './bulma.css'
 
-import Header from "./Header";
+import Content from "./Content"
 
 class Login extends React.Component {
     
@@ -11,23 +12,11 @@ class Login extends React.Component {
         this.state = {authenticated : false};
     }
 
-    // the below methods are me just trying to keep track of the lifecycle of a react component for debugging
-    // they are commented out
-    // componentWillUnmount(){
-    //     console.log("unmount");
-    // }
-    // componentDidMount() {
-    //     console.log("didmount");
-    // }
-    // componentWillUpdate(nextProps, nextState){
-    //     console.log("update");
-    // }
-
     // preforms an authenticate request rest api
     authenticate = () => {
+        document.getElementById("error").innerHTML = "";
         var url = 'https://authenticationserv.azurewebsites.net/Login';
         var data = {"username": this.refs.user.value , "password":this.refs.pass.value};
-        console.log(JSON.stringify(data));
         const self = this;  // save "this" of the class so we can set the state
         fetch(url , {
           method : 'POST',
@@ -45,12 +34,16 @@ class Login extends React.Component {
                     authenticated:true
                 });
             }
+            else
+            {
+               document.getElementById("error").innerHTML = "Wrong username or password"
+            }
         });
       }
 
       // the item that is rendered if the user is authenticated
       renderHeader = function () {
-        return <Header>Alice</Header>
+        return    <Content name = "Alice "></Content>
       }
 
       // the login page that is rendered if the user is not authenticated
@@ -76,6 +69,7 @@ class Login extends React.Component {
                                       <div className="field">
                                       </div>
                                       <a className="button is-block is-info is-large is-fullwidth" onClick = {this.authenticate}>Login</a>
+                                      <p id = "error"> </p>
                                   </form>
                               </div>
                           </div>

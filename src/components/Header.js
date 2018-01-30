@@ -19,7 +19,6 @@ class Header extends React.Component {
                         <h2 id="username">{this.props.name}</h2>
                     </div>
                 </nav>
-                <NavBar />
             </div>
         );
     }
