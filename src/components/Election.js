@@ -1,6 +1,5 @@
 import React from 'react';
 import './bulma.css';
-import NavBar from './NavBar';
 import Table from './Table';
 
 class Election extends React.Component {
@@ -10,12 +9,6 @@ class Election extends React.Component {
     this.state = {selections :[]};
   }
 
-  componentWillMount() {
-    //preform fetch request to get all the necessary data about the election
-    // example url for election data url = "http://40.112.150.44:3000/api/elections/ASASU2017%20Election"
-    var electionId = this.props.election;
-    console.log(electionId);
-  }
     render()  {
       return (
             <div>

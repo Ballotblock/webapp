@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './bulma.css';
 
 import Login from "./Login"
 

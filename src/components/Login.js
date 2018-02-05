@@ -1,6 +1,4 @@
 import React from 'react';
-import Cookie from 'react-cookie';
-import './bulma.css'
 
 import Content from "./Content"
 
@@ -8,41 +6,48 @@ class Login extends React.Component {
     
     constructor(props){
         super(props)
-        // normally here we would check for the existence of a cookie or something to see if the user was already authenticated
         this.state = {authenticated : false};
     }
 
-    // preforms an authenticate request rest api
+    // preforms an authenticate request to rest api
     authenticate = () => {
         document.getElementById("error").innerHTML = "";
-        var url = 'https://authenticationserv.azurewebsites.net/Login';
-        var data = {"username": this.refs.user.value , "password":this.refs.pass.value};
-        const self = this;  // save "this" of the class so we can set the state
-        fetch(url , {
-          method : 'POST',
-          body : JSON.stringify(data),
-          headers: new Headers({
-            'content-type': 'application/json',
-             'accept':  'application/json'
-          })
+
+        /***********
+         * Part Below commented out since there is no need to make requests while testing web app locally for now
+        ************/
+
+        //var url = 'https://authenticationserv.azurewebsites.net/Login';
+        //var data = {"username": this.refs.user.value , "password":this.refs.pass.value};
+        //const self = this;  // save "this" of the class so we can set the state
+        // fetch(url , {
+        //   method : 'POST',
+        //   body : JSON.stringify(data),
+        //   headers: new Headers({
+        //     'content-type': 'application/json',
+        //      'accept':  'application/json'
+        //   })
+        // })
+        // .then((response) =>{
+        //     console.log(response.status);
+        //     if(response.status === 200)
+        //     {
+        //         self.setState({
+        //             authenticated:true
+        //         });
+        //     }
+        //     else
+        //     {
+        //        document.getElementById("error").innerHTML = "Wrong username or password"
+        //     }
+        // });
+        this.setState({
+            authenticated:true
         })
-        .then((response) =>{
-            console.log(response.status);
-            if(response.status === 200)
-            {
-                self.setState({
-                    authenticated:true
-                });
-            }
-            else
-            {
-               document.getElementById("error").innerHTML = "Wrong username or password"
-            }
-        });
       }
 
       // the item that is rendered if the user is authenticated
-      renderHeader = function () {
+      renderContent = function () {
         return    <Content name = "Alice "></Content>
       }
 
@@ -80,10 +85,9 @@ class Login extends React.Component {
       }
 
       render() {
-        //console.log("render");
         if(this.state.authenticated)
         {
-            return this.renderHeader();
+            return this.renderContent();
         }
         else
         {

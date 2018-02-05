@@ -1,8 +1,6 @@
 import React from 'react';
 import './bulma.css';
 
-import NavBar from "./NavBar";
-
 class Header extends React.Component {
 
     render = function() {
