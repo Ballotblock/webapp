@@ -7,9 +7,13 @@ For more information on it, https://reactjs.org/ is a website that contains some
 
 There are several npm commands that are useful in testing and deploying. 
 
-npm run start - start the web application hosted locally 
+1. npm run start - start the web application hosted locally 
 
-npm run build - creates a "build file" that can be used for deployment.  The content you would see on the branch "DeployBranch" 
+2. npm run build - creates a "build file" that can be used for deployment.  The content you would see on the branch "DeployBranch" 
                 contains the contents of this file. 
 
-npm install while in the package.json directory would install all the necessary node modules. 
+3. npm install while in the package.json directory would install all the necessary node modules. There might be issues starting the app         locally without first installing the dependencies. 
+
+Below is a picture to document the various components used in the ui, to make it easier for anyone to jump in and work on it. 
+
+![](ComponentStructure.png)
