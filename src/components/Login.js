@@ -14,7 +14,8 @@ class Login extends React.Component {
         document.getElementById("error").innerHTML = "";
 
         /***********
-         * Part Below commented out since there is no need to make requests while testing web app locally for now
+         * Part Below commented out as our architecture has been redisgned, login would make a request
+         * to the intermediary server as the login route is defined and access tokens are designed
         ************/
 
         //var url = 'https://authenticationserv.azurewebsites.net/Login';
@@ -48,7 +49,7 @@ class Login extends React.Component {
 
       // the item that is rendered if the user is authenticated
       renderContent = function () {
-        return    <Content name = "Alice "></Content>
+        return    <Content name = "Alice" voterId = "Alice"></Content>
       }
 
       // the login page that is rendered if the user is not authenticated
