@@ -1,3 +1,0 @@
-npm run build 
-    will create a new folder named build that contains everything that will be used for deployment
-    - can prob just shove this folder into azure portal 
