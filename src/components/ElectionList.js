@@ -6,10 +6,17 @@ import ElectionListElement from "./ElectionListElement"
 // gui wise, its the box on the bottom left that contains a search bar on top 
 // with a list of elections
 class ElectionList extends React.Component {
+
+    constructor(props)
+    {
+        super(props)
+        this.state = {highlightedRow:0}
+    }
     
     // listen for clicking an election, pass to parent function
     clickElection = (index) =>{
         this.props.selectedElection(this.props.list[index])
+        this.setState({highlightedRow:index})
     }
 
     render(){
@@ -17,9 +24,16 @@ class ElectionList extends React.Component {
         var electionTitles = []
         // create a new <a> element for every election in the list passed as a prop
         if(this.props.list){
+
             for(var i = 0 ; i < this.props.list.length ; i++)
             {
-                electionTitles.push(<ElectionListElement key = {i} index = {i} clickElectionHandler = {this.clickElection} >{this.props.list[i]}</ElectionListElement>)
+                
+                var class_name = ""
+                if(this.state.highlightedRow === i)
+                {
+                    class_name = "selectedRow"
+                }
+                electionTitles.push(<ElectionListElement key = {i} index = {i} class_name = {class_name} clickElectionHandler = {this.clickElection} >{this.props.list[i]}</ElectionListElement>)
             }
         }
         

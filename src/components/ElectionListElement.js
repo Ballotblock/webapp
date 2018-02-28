@@ -11,8 +11,9 @@ class ElectionListElement extends React.Component {
     }
 
     render(){
+        var classes = "panel-block " + this.props.class_name
         return (
-            <a className="panel-block" onClick = {this.retrieveElection} > {this.props.children} </a>
+            <a className = {classes}  onClick = {this.retrieveElection} > {this.props.children} </a>
         )
     }
 }
