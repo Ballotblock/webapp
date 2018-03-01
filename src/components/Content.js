@@ -9,7 +9,10 @@ class Content extends React.Component {
 
     constructor(props){
         super(props)
-        this.state = {voterId : this.props.voterId};
+        this.state = {
+            voterId : this.props.voterId,
+            electionType : "Current Elections"
+        };
       }
 
     // preform a fetch request to retrieve all of a users' ballot
@@ -25,7 +28,6 @@ class Content extends React.Component {
             {
                 var eId = this.extractElectionId(ballots[i].ballotId)
                 var mark = ballots[i].marked;
-                console.log(mark)
                 markedBallots.push(mark)
                 electionIds.push(eId)
             }
@@ -43,7 +45,6 @@ class Content extends React.Component {
         return (electionId[1])
     }
 
-
     /*
     * select is the event handler in the ElectionList child component
     * the election list presents a list of clickable elections, clicking on another election
@@ -53,6 +54,15 @@ class Content extends React.Component {
         this.setState({selectedElection:newElection})
     }
 
+
+    /**
+     *  function called when one of the options on the navigation bar on type is clicked
+     */
+    selectType = (type) => {
+        this.setState({electionType:type})
+    }
+
+
     /*
     Below are the event handlers for the click events in the navbar
     */
@@ -60,14 +70,14 @@ class Content extends React.Component {
     return (
         <div>
             <Header name = {this.props.name}></Header>
-            <NavBar></NavBar>
+            <NavBar selectType = {this.selectType}></NavBar>
             <div className="section">
                 <div className="columns">
                     <div className="column is-4">
-                        <ElectionList title={this.props.electionType} selectedElection = {this.selectElection} list = {this.state.electionIds} ></ElectionList>
+                        <ElectionList title={this.state.electionType} selectedElection = {this.selectElection} list = {this.state.electionIds} ></ElectionList>
                     </div>
                     <div className="column is-8">
-                    <Election election = {this.state.selectedElection}></Election>
+                    <Election key = "current" election = {this.state.selectedElection}></Election>
                     </div>
                 </div>
             </div>   
@@ -75,18 +85,23 @@ class Content extends React.Component {
         )
    }
 
+   /**
+    * Note that the up comming elections and past elections just return blank pages for now
+    * TODO : separate the dates of the ballots into the appropriate categories so they can be 
+    *           rendered in the correct tab
+    */
    renderUpComingElections = () => {
     return (
         <div>
             <Header name = {this.props.name}></Header>
-            <NavBar></NavBar>
+            <NavBar selectType = {this.selectType} ></NavBar>
             <div className="section">
                 <div className="columns">
                     <div className="column is-4">
-                        <ElectionList title={this.props.electionType} selectedElection = {this.selectElection}></ElectionList>
+                        <ElectionList title={this.state.electionType} selectedElection = {this.selectElection}></ElectionList>
                     </div>
                     <div className="column is-8">
-                    <Election election = {this.state.selectedElection}></Election>
+                    <Election key = "upcomming" ></Election>
                     </div>
                 </div>
             </div>   
@@ -98,14 +113,14 @@ class Content extends React.Component {
     return (
         <div>
             <Header name = {this.props.name}></Header>
-            <NavBar></NavBar>
+            <NavBar selectType = {this.selectType} ></NavBar>
             <div className="section">
                 <div className="columns">
                     <div className="column is-4">
-                        <ElectionList title={this.props.electionType} selectedElection = {this.selectElection}></ElectionList>
+                        <ElectionList title={this.state.electionType} selectedElection = {this.selectElection}></ElectionList>
                     </div>
                     <div className="column is-8">
-                    <Election election = {this.state.selectedElection}></Election>
+                    <Election key = "paste" ></Election>
                     </div>
                 </div>
             </div>   
@@ -114,7 +129,18 @@ class Content extends React.Component {
    }
 
     render(){
-        return this.renderCurrentElections();
+        if(this.state.electionType === "Current Elections")
+        {
+            return this.renderCurrentElections();
+        }
+        else if(this.state.electionType === "Upcomming Elections")
+        {
+            return this.renderUpComingElections();
+        }
+        else if(this.state.electionType === "Past Elections")
+        {
+            return this.renderPastElections();
+        }
     }
 }
 

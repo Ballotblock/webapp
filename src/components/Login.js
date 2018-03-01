@@ -17,31 +17,6 @@ class Login extends React.Component {
          * Part Below commented out as our architecture has been redisgned, login would make a request
          * to the intermediary server as the login route is defined and access tokens are designed
         ************/
-
-        //var url = 'https://authenticationserv.azurewebsites.net/Login';
-        //var data = {"username": this.refs.user.value , "password":this.refs.pass.value};
-        //const self = this;  // save "this" of the class so we can set the state
-        // fetch(url , {
-        //   method : 'POST',
-        //   body : JSON.stringify(data),
-        //   headers: new Headers({
-        //     'content-type': 'application/json',
-        //      'accept':  'application/json'
-        //   })
-        // })
-        // .then((response) =>{
-        //     console.log(response.status);
-        //     if(response.status === 200)
-        //     {
-        //         self.setState({
-        //             authenticated:true
-        //         });
-        //     }
-        //     else
-        //     {
-        //        document.getElementById("error").innerHTML = "Wrong username or password"
-        //     }
-        // });
         this.setState({
             authenticated:true
         })

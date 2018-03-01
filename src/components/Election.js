@@ -31,6 +31,7 @@ class Election extends React.Component {
     })
   }
 
+
     render()  {
        var props = []
        if(this.propositions){
