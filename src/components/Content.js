@@ -13,6 +13,7 @@ class Content extends React.Component {
             voterId : this.props.voterId,
             electionType : "Current Elections"
         };
+        this.currentIndex = 0;
       }
 
     // preform a fetch request to retrieve all of a users' ballot
@@ -23,18 +24,17 @@ class Content extends React.Component {
           }).then((json)=>{
             var ballots = json[0]
             var electionIds = []
-            var markedBallots = []
+            this.markedBallots = []
             for(var i = 0 ; i < ballots.length ; i ++)
             {
                 var eId = this.extractElectionId(ballots[i].ballotId)
                 var mark = ballots[i].marked;
-                markedBallots.push(mark)
+                this.markedBallots.push(mark)
                 electionIds.push(eId)
             }
             this.setState({
                 electionIds:electionIds, //array of elections
                 selectedElection : electionIds[0],   // index of the current selected election, starts with the first election created
-                votedElections : markedBallots // array of booleans, a true at index 0 means the election with the id at electionsId[0] has already been voted in
             })
           })
     }
@@ -50,10 +50,10 @@ class Content extends React.Component {
     * the election list presents a list of clickable elections, clicking on another election
     * would render a new election with different propositions on the right of the list
      */
-    selectElection = (newElection) => {
+    selectElection = (newElection,index) => {
+        this.currentIndex = index;
         this.setState({selectedElection:newElection})
     }
-
 
     /**
      *  function called when one of the options on the navigation bar on type is clicked
@@ -62,11 +62,18 @@ class Content extends React.Component {
         this.setState({electionType:type})
     }
 
+    voteHandler = (index) => {
+        this.markedBallots[index] = true;
+    }
 
-    /*
-    Below are the event handlers for the click events in the navbar
-    */
    renderCurrentElections = () => {
+    var hasVoted = false;
+    if(this.markedBallots)
+    {
+        if(this.markedBallots[this.currentIndex]){
+            hasVoted = true;
+        }
+    }
     return (
         <div>
             <Header name = {this.props.name}></Header>
@@ -74,10 +81,10 @@ class Content extends React.Component {
             <div className="section">
                 <div className="columns">
                     <div className="column is-4">
-                        <ElectionList title={this.state.electionType} selectedElection = {this.selectElection} list = {this.state.electionIds} ></ElectionList>
+                        <ElectionList  title={this.state.electionType} selectedElection = {this.selectElection} list = {this.state.electionIds} ></ElectionList>
                     </div>
                     <div className="column is-8">
-                    <Election key = "current" election = {this.state.selectedElection}></Election>
+                    <Election key = {"current"} voter={this.props.voterId} updateMarks={this.voteHandler} index={this.currentIndex} hasVoted={hasVoted} election = {this.state.selectedElection}></Election>
                     </div>
                 </div>
             </div>   

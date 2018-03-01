@@ -7,6 +7,7 @@ class Login extends React.Component {
     constructor(props){
         super(props)
         this.state = {authenticated : false};
+        this.name = ""
     }
 
     // preforms an authenticate request to rest api
@@ -15,8 +16,9 @@ class Login extends React.Component {
 
         /***********
          * Part Below commented out as our architecture has been redisgned, login would make a request
-         * to the intermediary server as the login route is defined and access tokens are designed
         ************/
+       //console.log(this.refs.user.value)
+       //console.log(this.refs.pass.value)
         this.setState({
             authenticated:true
         })

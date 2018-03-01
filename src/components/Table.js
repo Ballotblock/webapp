@@ -14,6 +14,7 @@ class Table extends React.Component {
   }
   //called when one of the rows in the table is clicked
   rowClickHandler = (index) => {
+    this.props.update(this.props.answerIndex, index)
     this.setState({highlightrow:index})
   }
 

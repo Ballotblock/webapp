@@ -11,7 +11,7 @@ class Header extends React.Component {
                         <div className="level-item">
                             <h1 className="title level-item is-1">BallotBlock</h1>
                         </div>
-                        <h2 id="username">{this.props.name}</h2>
+                        <h2 id="username">Welcome {this.props.name}</h2>
                 </nav>
             </div>
         );
