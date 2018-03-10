@@ -20,14 +20,17 @@ class Table extends React.Component {
 
   render()  {
     var rows = []
-    for(var i = 0 ; i < this.props.choices.length ; i ++)
+    if(this.props.choices)
     {
-      var class_name = ""
-      if(this.state.highlightrow === i)
+      for(var i = 0 ; i < this.props.choices.length ; i ++)
       {
-        class_name = "selectedRow"
+        var class_name = ""
+        if(this.state.highlightrow === i)
+        {
+          class_name = "selectedRow"
+        }
+        rows.push(<TableRow name={this.props.question} highlight = {class_name}  key = {i} index = {i} rowClickHandler = {this.rowClickHandler}>{this.props.choices[i]}</TableRow>)
       }
-      rows.push(<TableRow name={this.props.question} highlight = {class_name}  key = {i} index = {i} rowClickHandler = {this.rowClickHandler}>{this.props.choices[i]}</TableRow>)
     }
       return (
         <div>

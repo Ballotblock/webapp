@@ -32,3 +32,55 @@ abbr{
   font-weight: bold;
 }
 
+.is-horizontal-center {
+  justify-content: center;
+}
+
+
+.loadingLogin{
+  width:100px;
+  height:100px;
+  border-radius:150px;
+  border:15px solid hsl(204, 86%, 53%);
+  border-top-color: silver;
+  box-sizing:border-box;
+  position:absolute;
+  top:20%;left:50%;
+  margin-top:-80px;
+  margin-left:-50px;
+  animation:loading 1.2s linear infinite;
+  -webkit-animation:loading 1.2s linear infinite;
+  
+}
+
+.loading{
+  width:100px;
+  height:100px;
+  border-radius:150px;
+  border:15px solid hsl(204, 86%, 53%);
+  border-top-color: silver;
+  box-sizing:border-box;
+  margin-left:50%;
+  animation:loading 1.2s linear infinite;
+  -webkit-animation:loading 1.2s linear infinite;
+  
+}
+
+@keyframes loading{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+@-webkit-keyframes loading{
+  0%{-webkit-transform:rotate(0deg)}
+  100%{-webkit-transform:rotate(360deg)}
+}
+
+
+
+
+
+
+
+
+
+

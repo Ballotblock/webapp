@@ -9,6 +9,9 @@ class Election extends React.Component {
       this.title = ""
       this.window = ""
       this.voted = false;
+      this.state={
+        loading:''
+      }
     }
 
   //As users click on an election in the election list, a new prop will be passed in here where we do a new 
@@ -16,8 +19,12 @@ class Election extends React.Component {
     componentWillReceiveProps(nextProps){
       var url = "https://ballotblock.azurewebsites.net/api/election/" + nextProps.election + "?id=" + this.props.voter
       this.window = ""
+      this.propositions = []
       this.voted = nextProps.hasVoted
       this.title = nextProps.election
+      this.setState({
+        loading:<div className="loading"></div>
+      })
       fetch(url).then((response)=>{
         return response.json()
       }).then((json)=>{
@@ -28,10 +35,16 @@ class Election extends React.Component {
         this.window += (date.getMonth()+1 + "/" + date.getDay() + "/" + date.getFullYear() + " - ")
         date = new Date(end) 
         this.window += (date.getMonth()+1 + "/" + date.getDay() + "/" + date.getFullYear())
-        this.answers = new Array(this.propositions.length)
-        this.setState({"update":"update"}) // call setstate here so component will render updates
+        if(this.propositions)
+        {
+          this.answers = new Array(this.propositions.length)
+        }
+        this.setState({
+          "update":"update",
+          loading:''
       })
-    }
+    })
+  }
 
 
   /**
@@ -100,8 +113,9 @@ class Election extends React.Component {
        }
 
       return (
-            <div className = "has-text-centered">
+            <div className = "has-text-centered is-horizontal-center">
               <h1 className = "title">{this.title}</h1>
+              {this.state.loading}
               <h2 className = "subtitle"> {this.window} </h2>
               {props}
             </div>     

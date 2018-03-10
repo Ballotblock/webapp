@@ -59,7 +59,14 @@ class Content extends React.Component {
      *  function called when one of the options on the navigation bar on type is clicked
      */
     selectType = (type) => {
-        this.setState({electionType:type})
+        if(this.state.electionType !== type)
+        {
+            this.setState({electionType:type})
+        }
+        else
+        {
+            console.log("same type")
+        }
     }
 
     voteHandler = (index) => {
