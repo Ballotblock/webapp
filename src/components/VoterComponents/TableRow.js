@@ -9,7 +9,7 @@ class TableRow extends React.Component {
   }
 
   render()  {
-      var class_name = "normalFont" + this.props.highlight
+      var class_name = "normalFont " + this.props.highlight
       return (
         <tr>
             <th className= {class_name} onClick = {this.rowClick} >{this.props.children}</th>

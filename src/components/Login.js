@@ -113,9 +113,12 @@ class Login extends React.Component {
       body: JSON.stringify(payload)
     }).then(response => {
       if (response.status === 201) {
-        this.setState({ signUpError: "Account created" });
+        this.setState({ signUpError: "Account created",
+        loading: "",
+       });
       } else {
-        this.setState({ signUpError: "Unable to create account" });
+        this.setState({ signUpError: "Unable to create account",
+        loading: "" });
         return false;
       }
     });
