@@ -7,8 +7,19 @@
       <!-- Style Sheets -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
       <link rel="stylesheet" type = "text/css" href = "Election.css" >
-       
-      <!-- Scripts for react  , commented out for now since its not yet fully integrated in 
+
+	  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>      <!-- Scripts for react  , commented out for now since its not yet fully integrated in 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
@@ -21,7 +32,7 @@
             <!-- Left side -->
             <div class="level-left">
                <div class = "level-item">
-                  <h1 class="title level-item is-1">Admin view Ballotblock</h1>
+                  <h1 class="title level-item is-1">Creator view Ballotblock</h1>
                </div>
             </div>
             <div class="level-right">
@@ -33,38 +44,6 @@
 
 
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>
-<button type="submit" class="signupbtn">Login</button>
-<div id="id01" class="modal">
-  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/action_page.php">
-    <div class="container">
-      <h1>Sign Up</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-      <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Enter username" name="username" required>
-      
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-      
-      
- <label>
-        <input type="checkbox" checked="checked" name="admin_Account" style="margin-bottom:15px"> Admin Account Sign-up
-      </label>
-      
-
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Sign Up</button>
-		
-      </div>
-    </div>
-  </form>
-</div>
 
 <script>
 // Get the modal
@@ -87,7 +66,7 @@ window.onclick = function(event) {
       <!--  Navigation Bar -->
       <nav class="navbar">
          <a class="navbar-item">Create Elections</a>
-         <a class="navbar-item"> Election Results</a>
+         <a class="navbar-item"> My Elections</a>
       </nav>
        
       <!----- Content ----->
@@ -96,8 +75,12 @@ window.onclick = function(event) {
             <div class="column is-4">
                <nav class="panel">
                  
+				 
             <div class="column is-8">
 			<h2> Election Creation <h2>
+			<th> Election Name </th><input type="text" name="election name">
+			<th> Start Date: <input type="text" id="datepicker"></th> 
+			<th> <br> End Date: <input type="text" id="datepicker"></th> 
                <table class="table is-fullwidth is-hoverable">
                   <thead>
                      <tr>
@@ -142,6 +125,8 @@ window.onclick = function(event) {
                      </tr>
                   </tbody>
                </table>
+			   <button type="button" onclick="alert('Election Created! Please go to the my Election tab to view')">Submit</button>
+			   
 			   
             </div>
          </div>
