@@ -9,7 +9,8 @@ class Election extends React.Component {
     this.window = "";
     this.voted = false;
     this.state = {
-      loading: ""
+      loading: "",
+      confirm:""
     };
   }
 
@@ -56,7 +57,7 @@ class Election extends React.Component {
   /**
    * Event handler for when the submit button is clicked
    */
-  vote = () => {
+  voteHandler = () => {
     // check make sure all propositions have an answer
     for (var i = 0; i < this.answers.length; i++) {
       if (this.answers[i] == null) {
@@ -64,35 +65,63 @@ class Election extends React.Component {
         return;
       }
     }
-    //make fetch request
-    var url =
-      "http://ballotblock.azurewebsites.net/api/vote?id=" + this.props.voter;
-    console.log(this.title);
-    console.log(this.answers);
-    var payload = {
-      election: this.title,
-      answers: this.answers
-    };
+
+    //check for confirmation
     this.setState({
-      loading: <div className="loading" />
+      confirm: (
+        <div className="confirm">
+          <h1>Confirm your action</h1>
+          <p>Are you sure you want to submit your vote?</p>
+          <button onClick = {this.cancelHandler}>Cancel</button>
+          <button onClick = {this.confirmHandler}>Confirm</button>
+        </div>
+      )
     });
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        this.voted = true;
-        alert("vote sucessful, comfirmation box needs to be added");
-        this.props.updateMarks(this.props.index, this.answers);
-        this.setState({
-          update: "update",
-          loading: ""
-        });
-      });
   };
+
+
+  cancelHandler = () => {
+    this.setState({
+      confirm:""
+    })
+  }
+
+  confirmHandler = () => {
+    this.setState({
+      confirm:""
+    })
+    this.vote();
+  }
+
+  // vote function makes the request to the backend to store the vote
+  vote = () => {
+    var url =
+    "http://ballotblock.azurewebsites.net/api/vote?id=" + this.props.voter;
+  console.log(this.title);
+  console.log(this.answers);
+  var payload = {
+    election: this.title,
+    answers: this.answers
+  };
+  this.setState({
+    loading: <div className="loading" />
+  });
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload)
+    }).then(response => {
+      return response.json();
+    })
+    .then(json => {
+      this.voted = true;
+      alert("vote sucessful");
+      this.props.updateMarks(this.props.index, this.answers);
+      this.setState({
+        update: "update",
+        loading: ""
+      });
+    });
+  }
 
   upDateAnswers = (answerIndex, answer) => {
     if (this.answers) {
@@ -122,7 +151,7 @@ class Election extends React.Component {
         props.push(
           <a
             key={this.title + "submit"}
-            onClick={this.vote}
+            onClick={this.voteHandler}
             className="button is-large"
           >
             Submit
@@ -132,6 +161,7 @@ class Election extends React.Component {
     }
     return (
       <div className="has-text-centered is-horizontal-center">
+        {this.state.confirm}
         <h1 className="title">{this.title}</h1>
         {this.state.loading}
         <h2 className="subtitle"> {this.window} </h2>
