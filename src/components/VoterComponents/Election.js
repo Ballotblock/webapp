@@ -96,31 +96,31 @@ class Election extends React.Component {
   // vote function makes the request to the backend to store the vote
   vote = () => {
     var url =
-    "http://ballotblock.azurewebsites.net/api/vote?id=" + this.props.voter;
-  console.log(this.title);
-  console.log(this.answers);
-  var payload = {
-    election: this.title,
-    answers: this.answers
-  };
-  this.setState({
-    loading: <div className="loading" />
-  });
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify(payload)
-    }).then(response => {
-      return response.json();
-    })
-    .then(json => {
-      this.voted = true;
-      alert("vote sucessful");
-      this.props.updateMarks(this.props.index, this.answers);
-      this.setState({
-        update: "update",
-        loading: ""
-      });
+      "http://ballotblock.azurewebsites.net/api/vote?id=" + this.props.voter;
+    console.log(this.title);
+    console.log(this.answers);
+    var payload = {
+      election: this.title,
+      answers: this.answers
+    };
+    this.setState({
+      loading: <div className="loading" />
     });
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(payload)
+      }).then(response => {
+        return response.json();
+      })
+      .then(json => {
+        this.voted = true;
+        alert("vote sucessful");
+        this.props.updateMarks(this.props.index, this.answers);
+        this.setState({
+          update: "update",
+          loading: ""
+        });
+      });
   }
 
   upDateAnswers = (answerIndex, answer) => {
