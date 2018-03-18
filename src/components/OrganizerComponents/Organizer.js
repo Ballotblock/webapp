@@ -7,7 +7,10 @@ class Organizer extends React.Component {
     {
         return(<div>
             <Header name={this.props.name}></Header>
-            <h1 className = "is-size-1 has-text-centered">Election Creator stuff here</h1>
+            <nav className="navbar">
+              <a className="navbar-item selectedRow" >Create Elections</a>
+              <a className="navbar-item" >Election Results</a>
+          </nav>
             </div>);
     }
 }
