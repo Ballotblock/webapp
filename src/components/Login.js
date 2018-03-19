@@ -37,6 +37,9 @@ class Login extends React.Component {
     this.login(this.refs.user.value, this.refs.pass.value);
   };
 
+  //listen for enter key press
+  listenKeyPress = (event) => { if(event.key === 'Enter'){ this.login(this.refs.user.value, this.refs.pass.value); } }
+
   createAccountClick = () => {
     var username = this.refs.username.value;
     var password = this.refs.password.value;
@@ -161,6 +164,8 @@ class Login extends React.Component {
                         type="password"
                         ref="pass"
                         placeholder="Password"
+                        id="one"
+                        onKeyPress={this.listenKeyPress}
                       />
                     </div>
                   </div>
