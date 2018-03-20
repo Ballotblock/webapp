@@ -2,8 +2,10 @@ import React from "react";
 import Header from "../Header";
 import Election from "./Election";
 import NavBar from "./NavBar";
+import {Router, Route} from 'react-router';
 import ElectionList from "./ElectionList";
-import JoinTab from "./JoinTab"
+import JoinTab from "./JoinTab";
+import ElectionResults from "./ElectionResults";
 
 class Content extends React.Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class Content extends React.Component {
             loading: ""
         };
         this.currentIndex = 0;
+
     }
 
     // preform a fetch request to retrieve all of a users' ballot
@@ -171,6 +174,7 @@ class Content extends React.Component {
             </div>
           </div>
         </div>
+        <ElectionResults></ElectionResults>
       </div>
         );
     };
@@ -204,15 +208,18 @@ class Content extends React.Component {
     };
 
     render() {
+
+     
         if (this.state.electionType === "Current Elections") {
-            return this.renderCurrentElections();
+          return this.renderCurrentElections();
         } else if (this.state.electionType === "Upcomming Elections") {
-            return this.renderUpComingElections();
+          return this.renderUpComingElections();
         } else if (this.state.electionType === "Past Elections") {
-            return this.renderPastElections();
+           return this.renderPastElections();
         } else if (this.state.electionType === "Join Elections") {
             return this.renderJoinElections();
         }
+  
     }
 }
 
