@@ -1,6 +1,7 @@
 import React from "react";
 import Content from "./VoterComponents/Content";
 import Organizer from "../components/OrganizerComponents/Organizer"
+import * as Servers from './settings'
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,8 +12,7 @@ class Login extends React.Component {
       loading: ""
     };
     this.name = "";
-    this.registration_url =
-      "https://ballotblockregistration.azurewebsites.net/api/";
+    this.registration_url = Servers.REGISTRATION_SERVER;
     this.loginError = "";
   }
 

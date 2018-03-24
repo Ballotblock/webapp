@@ -15,7 +15,6 @@ class NavBar extends React.Component {
                 <a className="navbar-item" onClick = {(t) => this.selectItem("Current Elections")} >Current Elections</a>
                 <a className="navbar-item" onClick = {(t) => this.selectItem("Upcomming Elections")} >Upcomming Elections</a>
                 <a className="navbar-item" onClick = {(t) => this.selectItem("Past Elections")} >Past Elections</a>
-                <a className="navbar-item" onClick = {(t) => this.selectItem("Join Elections")} >Join Elections</a>
             </nav>
         );
     }

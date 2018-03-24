@@ -6,6 +6,7 @@ import {Router, Route} from 'react-router';
 import ElectionList from "./ElectionList";
 import JoinTab from "./JoinTab";
 import ElectionResults from "./ElectionResults";
+import * as Servers from '../settings'
 
 class Content extends React.Component {
     constructor(props) {
@@ -19,11 +20,16 @@ class Content extends React.Component {
 
     }
 
-    // preform a fetch request to retrieve all of a users' ballot
+    // preform a fetch request to retrieve all current ballots
     componentWillMount(props) {
+       this.getElections("current")
+    }
+
+    // preforms requests to get a list of election ids
+    // date can either be "current" , "past" , or "upcomming"
+    getElections = (date) => {
         var url =
-            "https://ballotblock.azurewebsites.net/api/election?id=" +
-            this.props.voterId;
+        Servers.API_SERVER + "election/" + date;
         this.setState({
             loading: <div className="loading" />
         });
@@ -32,15 +38,10 @@ class Content extends React.Component {
                 return response.json();
             })
             .then(json => {
-                var ballots = json[0];
+                var elections = json[0];
                 var electionIds = [];
-                this.markedBallots = [];
-                this.answers = [];
-                for (var i = 0; i < ballots.length; i++) {
-                    var eId = this.extractElectionId(ballots[i].ballotId);
-                    var mark = ballots[i].marked;
-                    this.markedBallots.push(mark);
-                    this.answers.push(ballots[i].selections);
+                for (var i = 0; i < elections.length; i++) {
+                    var eId = elections[i].electionId
                     electionIds.push(eId);
                 }
                 this.setState({
@@ -51,11 +52,6 @@ class Content extends React.Component {
             });
     }
 
-    // takes the ballotId and extracts the electionId
-    extractElectionId = ballotId => {
-        var electionId = ballotId.split("_");
-        return electionId[1];
-    };
 
     /*
      * select is the event handler in the ElectionList child component
@@ -86,18 +82,6 @@ class Content extends React.Component {
     };
 
     renderCurrentElections = () => {
-        var hasVoted = false;
-        var selection = "";
-        if (this.markedBallots) {
-            if (this.markedBallots[this.currentIndex]) {
-                hasVoted = true;
-            }
-        }
-        if (this.answers) {
-            if (this.answers[this.currentIndex]) {
-                selection = this.answers[this.currentIndex];
-            }
-        }
         return (
             <div>
         <Header name={this.props.name} />
@@ -116,10 +100,7 @@ class Content extends React.Component {
               <Election
                 key={"current"}
                 voter={this.props.voterId}
-                updateMarks={this.voteHandler}
                 index={this.currentIndex}
-                selection={selection}
-                hasVoted={hasVoted}
                 election={this.state.selectedElection}
               />
             </div>
@@ -179,47 +160,15 @@ class Content extends React.Component {
         );
     };
 
-    renderJoinElections = () => {
-        return (
-            <div>
-        <Header name={this.props.name} />
-        <NavBar selectType={this.selectType} />
-        <div className="section">
-          
-        <nav className="panel">
-            <p className="panel-heading">
-                Enter a election title or organization name
-            </p>
-            <div className="panel-block">
-                <p className="control has-icons-left container">
-                    <input className="input is-small" type="text" placeholder="search" />
-                </p>
-            </div>
-     
-        </nav>   
-            
-            
-              <JoinTab></JoinTab>
-            
-         
-        </div>
-      </div>
-        );
-    };
-
     render() {
 
-     
         if (this.state.electionType === "Current Elections") {
           return this.renderCurrentElections();
         } else if (this.state.electionType === "Upcomming Elections") {
           return this.renderUpComingElections();
         } else if (this.state.electionType === "Past Elections") {
            return this.renderPastElections();
-        } else if (this.state.electionType === "Join Elections") {
-            return this.renderJoinElections();
-        }
-  
+        } 
     }
 }
 
