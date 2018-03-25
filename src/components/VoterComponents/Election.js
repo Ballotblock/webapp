@@ -1,6 +1,9 @@
 import React from "react";
 import Table from "./Table";
 import StaticTable from "./StaticTable";
+import moment from 'moment';
+import * as Servers from '../settings';
+
 
 class Election extends React.Component {
   constructor(props) {
@@ -21,13 +24,12 @@ class Election extends React.Component {
       return false;
     }
     var url =
-      "https://ballotblock.azurewebsites.net/api/election/" +
+      Servers.API_SERVER + "election/" +
       nextProps.election +
       "?id=" +
-      this.props.voter;
+    this.props.voter;
     this.window = "";
     this.propositions = [];
-    this.voted = nextProps.hasVoted;
     this.title = nextProps.election;
     this.setState({
       loading: <div className="loading" />
@@ -37,15 +39,20 @@ class Election extends React.Component {
         return response.json();
       })
       .then(json => {
-        this.propositions = json[0].propositions;
-        var start = json[0].startDate;
-        var end = json[0].endDate;
-        var date = new Date(start);
-        this.window += (date.getMonth()+1 + "/" + date.getDay() + "/" + date.getFullYear() + " - ")
-        date = new Date(end);
-        this.window += date.getMonth() + 1 + "/" + date.getDay() + "/" + date.getFullYear();
+        this.propositions = json[0].election.propositions;
+        var start = json[0].election.startDate;
+        var end = json[0].election.endDate;
+        var iso = moment(start);
+        this.window += (iso.format('MMMM Do YYYY') + " - ");
+        iso = moment(end);
+        this.window += (iso.format('MMMM Do YYYY'));
         if (this.propositions) {
           this.answers = new Array(this.propositions.length);
+        }
+        this.selection = json[0].ballot.selections;
+        if(this.selection)
+        {
+          this.voted = true;
         }
         this.setState({
           update: "update",
@@ -53,6 +60,7 @@ class Election extends React.Component {
         });
       });
   }
+
 
   /**
    * Event handler for when the submit button is clicked
@@ -96,9 +104,7 @@ class Election extends React.Component {
   // vote function makes the request to the backend to store the vote
   vote = () => {
     var url =
-      "http://ballotblock.azurewebsites.net/api/vote?id=" + this.props.voter;
-    console.log(this.title);
-    console.log(this.answers);
+      Servers.API_SERVER + "vote?id=" + this.props.voter;
     var payload = {
       election: this.title,
       answers: this.answers
@@ -115,7 +121,6 @@ class Election extends React.Component {
       .then(json => {
         this.voted = true;
         alert("vote sucessful");
-        this.props.updateMarks(this.props.index, this.answers);
         this.setState({
           update: "update",
           loading: ""
@@ -179,17 +184,8 @@ class Election extends React.Component {
             key={this.title + i}
             question={this.propositions[i].question}
             choices={this.propositions[i].choices}
-            highlightrow={this.props.selection[i]}
+            highlightrow={this.selection[i]}
           />
-        );
-      }
-    }
-    if (props.length > 0) {
-      if (!this.voted) {
-        props.push(
-          <a key={this.title + "submit"} className="button is-large">
-            Submit
-          </a>
         );
       }
     }

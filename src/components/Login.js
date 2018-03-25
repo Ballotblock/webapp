@@ -1,22 +1,38 @@
 import React from "react";
 import Content from "./VoterComponents/Content";
 import Organizer from "../components/OrganizerComponents/Organizer"
+import * as Servers from './settings'
+import Cookies from 'js-cookie';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      authenticated: false,
-      page: "Login",
-      loading: ""
-    };
-    this.name = "";
-    this.registration_url =
-      "https://ballotblockregistration.azurewebsites.net/api/";
+
+    var session = Cookies.get('name');
+    var type = Cookies.get('type');
+    this.registration_url = Servers.REGISTRATION_SERVER;
     this.loginError = "";
+
+    if(session && type) {
+      this.state = {
+        authenticated: true,
+        page: "Login",
+        loading: "",
+        name: session,
+        account_type: parseInt(type)
+      };
+    }
+    else{
+      this.state = {
+        authenticated: false,
+        page: "Login",
+        loading: "",
+        name: session,
+      };
+    }
   }
 
-  //link listenr for "already have account"
+  //link listener for "already have account"
   haveAccount = () => {
     this.setState({
       page: "Login",
@@ -36,6 +52,9 @@ class Login extends React.Component {
   loginClick = () => {
     this.login(this.refs.user.value, this.refs.pass.value);
   };
+
+  //listen for enter key press
+  listenKeyPress = (event) => { if(event.key === 'Enter'){ this.login(this.refs.user.value, this.refs.pass.value); } }
 
   createAccountClick = () => {
     var username = this.refs.username.value;
@@ -85,8 +104,14 @@ class Login extends React.Component {
         }
         //below we store a cookie manually on client side
         var token = JSON.stringify(json);
-        document.cookie = "token=" + token;
+        // document.cookie = "token=" + token;
+        // document.cookie = "username=" + username;
         var account_type = json.account_type;
+
+        Cookies.set('token',token);
+        Cookies.set('name',username);
+        Cookies.set('type',account_type);
+
         this.setState({
           authenticated: true,
           account_type: account_type,
@@ -161,6 +186,8 @@ class Login extends React.Component {
                         type="password"
                         ref="pass"
                         placeholder="Password"
+                        id="one"
+                        onKeyPress={this.listenKeyPress}
                       />
                     </div>
                   </div>
