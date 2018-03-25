@@ -39,15 +39,20 @@ class Election extends React.Component {
         return response.json();
       })
       .then(json => {
-        this.propositions = json[0].propositions;
-        var start = json[0].startDate;
-        var end = json[0].endDate;
+        this.propositions = json[0].election.propositions;
+        var start = json[0].election.startDate;
+        var end = json[0].election.endDate;
         var iso = moment(start);
         this.window += (iso.format('MMMM Do YYYY') + " - ");
         iso = moment(end);
         this.window += (iso.format('MMMM Do YYYY'));
         if (this.propositions) {
           this.answers = new Array(this.propositions.length);
+        }
+        this.selection = json[0].ballot.selections;
+        if(this.selection)
+        {
+          this.voted = true;
         }
         this.setState({
           update: "update",
@@ -116,7 +121,6 @@ class Election extends React.Component {
       .then(json => {
         this.voted = true;
         alert("vote sucessful");
-        this.props.updateMarks(this.props.index, this.answers);
         this.setState({
           update: "update",
           loading: ""
@@ -180,17 +184,8 @@ class Election extends React.Component {
             key={this.title + i}
             question={this.propositions[i].question}
             choices={this.propositions[i].choices}
-            highlightrow={this.props.selection[i]}
+            highlightrow={this.selection[i]}
           />
-        );
-      }
-    }
-    if (props.length > 0) {
-      if (!this.voted) {
-        props.push(
-          <a key={this.title + "submit"} className="button is-large">
-            Submit
-          </a>
         );
       }
     }
