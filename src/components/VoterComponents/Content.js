@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import { Router, Route } from "react-router";
 import ElectionList from "./ElectionList";
 import ElectionResults from "./ElectionResults";
+import UpcommingElections from "./UpcommingElections";
 import * as Servers from "../settings";
 import moment from 'moment';
 
@@ -98,11 +99,15 @@ class Content extends React.Component {
    */
   selectType = type => {
     if (this.state.electionType !== type) {
+      this.titles = [];
+      this.dates = [];
       this.setState({
-        electionType: type
+        electionType: type,
+        electionIds: []
       });
 
       if (type === "Upcomming Elections") {
+        this.getElections("upcomming")
       } else if (type === "Past Elections") {
         this.getElections("past");
       } else if (type === "Current Elections") {
@@ -153,22 +158,28 @@ class Content extends React.Component {
   renderUpComingElections = () => {
     return (
       <div>
-        <Header name={this.props.name} />
-        <NavBar selectType={this.selectType} />
-        <div className="section">
-          <div className="columns">
-            <div className="column is-4">
-              <ElectionList
-                title={this.state.electionType}
-                selectedElection={this.selectElection}
-              />
-            </div>
-            <div className="column is-8">
-              <Election key="upcomming" />
-            </div>
-          </div>
+      <Header name={this.props.name} />
+      <NavBar selectType={this.selectType} />
+      <div className="section">
+        <div className="panel-block">
+          <p className="control has-icons-left">
+            <input
+              className="input is-small"
+              type="text"
+              placeholder="search"
+            />
+            <span className="icon is-small is-left">
+              <i className="fa fa-search" />
+            </span>
+          </p>
         </div>
       </div>
+      <UpcommingElections
+      titles = {this.state.electionIds}
+      dates = {this.dates}
+      organizations = {this.organizers}
+      />
+    </div>
     );
   };
 

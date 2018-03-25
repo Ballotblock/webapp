@@ -1,7 +1,7 @@
 import React from "react";
 
 
-class ElectionResultBox extends React.Component {
+class UpcommingElectionBox extends React.Component {
 
 
     render() {
@@ -19,13 +19,10 @@ class ElectionResultBox extends React.Component {
                   </p>
                 </div>
               </div>
-              <div className="media-right">
-                <button className="button">View Results</button>
-              </div>
             </article>
           </div>
         )
     }
 }
 
-export default ElectionResultBox;
+export default UpcommingElectionBox;
