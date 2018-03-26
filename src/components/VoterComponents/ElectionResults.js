@@ -1,21 +1,20 @@
 import React from "react";
 import ElectionResultBox from "./ElectionResultBox"
+import {Chart} from 'react-google-charts';
 
 
+/**
+ * This props needs the following props passed in
+ * titles : an array of election titles
+ * dates : an array of election dates
+ * organizations : an array of organizations
+ * 
+ * Each ElectionResultBox takes the following:
+ *    title
+ *    date
+ *    organization
+ */
 class ElectionResults extends React.Component {
-
-    /**
-     * This props needs the following props passed in
-     * titles : an array of election titles
-     * dates : an array of election dates
-     * organizations : an array of organizations
-     * 
-     * Each ElectionResultBox takes the following:
-     *    title
-     *    date
-     *    organization
-     */
-
     render() {
         var boxes = [];
         if(this.props.titles && this.props.dates && this.props.organizations)
@@ -29,7 +28,7 @@ class ElectionResults extends React.Component {
           }
         }
         return (
-            <div>
+            <div className= "is-center">
               {boxes}
             </div>
         );
