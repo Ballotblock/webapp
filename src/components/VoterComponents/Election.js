@@ -120,7 +120,6 @@ class Election extends React.Component {
       })
       .then(json => {
         this.voted = true;
-        alert("vote sucessful");
         this.setState({
           update: "update",
           loading: ""

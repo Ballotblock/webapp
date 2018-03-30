@@ -7,7 +7,7 @@ import ElectionList from "./ElectionList";
 import ElectionResults from "./ElectionResults";
 import UpcommingElections from "./UpcommingElections";
 import * as Servers from "../settings";
-import moment from 'moment';
+import moment from "moment";
 
 class Content extends React.Component {
   constructor(props) {
@@ -22,44 +22,43 @@ class Content extends React.Component {
 
   // preform a fetch request to retrieve all current ballots
   componentWillMount(props) {
-    this.getElections("current")
+    this.getElections("current");
   }
 
   // preforms requests to get a list of election ids
   // date can either be "current" , "past" , or "upcomming"
-  getElections = (date) => {
+  getElections = date => {
     var url = Servers.API_SERVER + "election/" + date;
     this.setState({
       loading: <div className="loading" />
     });
+    //console.log(url);
     fetch(url)
       .then(response => {
         return response.json();
       })
       .then(json => {
         var elections = json[0];
-        console.log(json);
+        //console.log(json);
         var electionIds = [];
         for (var i = 0; i < elections.length; i++) {
           var eId = elections[i].electionId;
           electionIds.push(eId);
         }
-        if(elections[0].organizer){
-            this.dates = [];
-            this.organizers = [];
-            for (var i = 0; i < elections.length; i++) {
+        if (elections[0] && elections[0].organizer) {
+          this.dates = [];
+          this.organizers = [];
+          for (var i = 0; i < elections.length; i++) {
+            // get all necessary dates
+            var start = elections[i].startDate;
+            var end = elections[i].endDate;
+            var date = this.formatDate(start, end);
+            this.dates.push(date);
 
-                // get all necessary dates
-                 var start = elections[i].startDate;
-                 var end = elections[i].endDate;
-                 var date = this.formatDate(start,end);
-                 this.dates.push(date);
-                
-                //get all organizers
-                var resource = elections[i].organizer;
-                var org = this.extractOrganizer(resource);
-                this.organizers.push(org);
-              }
+            //get all organizers
+            var org = elections[i].organizer;
+            this.organizers.push(org);
+          }
         }
         this.setState({
           electionIds: electionIds, //array of elections
@@ -69,16 +68,11 @@ class Content extends React.Component {
       });
   };
 
-
-  formatDate = (start,end) => {
-      var s = moment(start);
-      var e = moment(end);
-      return (s.format('MMMM Do YYYY') + " - " + e.format('MMMM Do YYYY'));
-  }
-
-  extractOrganizer = (resource) => {
-    return resource.split('#')[1];
-  }
+  formatDate = (start, end) => {
+    var s = moment(start);
+    var e = moment(end);
+    return s.format("MMMM Do YYYY") + " - " + e.format("MMMM Do YYYY");
+  };
 
   /*
      * select is the event handler in the ElectionList child component
@@ -107,7 +101,7 @@ class Content extends React.Component {
       });
 
       if (type === "Upcomming Elections") {
-        this.getElections("upcomming")
+        this.getElections("upcomming");
       } else if (type === "Past Elections") {
         this.getElections("past");
       } else if (type === "Current Elections") {
@@ -150,40 +144,7 @@ class Content extends React.Component {
     );
   };
 
-  /**
-   * Note that the up comming elections and past elections just return blank pages for now
-   * TODO : separate the dates of the ballots into the appropriate categories so they can be
-   *           rendered in the correct tab
-   */
   renderUpComingElections = () => {
-    return (
-      <div>
-      <Header name={this.props.name} />
-      <NavBar selectType={this.selectType} />
-      <div className="section">
-        <div className="panel-block">
-          <p className="control has-icons-left">
-            <input
-              className="input is-small"
-              type="text"
-              placeholder="search"
-            />
-            <span className="icon is-small is-left">
-              <i className="fa fa-search" />
-            </span>
-          </p>
-        </div>
-      </div>
-      <UpcommingElections
-      titles = {this.state.electionIds}
-      dates = {this.dates}
-      organizations = {this.organizers}
-      />
-    </div>
-    );
-  };
-
-  renderPastElections = () => {
     return (
       <div>
         <Header name={this.props.name} />
@@ -202,11 +163,36 @@ class Content extends React.Component {
             </p>
           </div>
         </div>
-        <ElectionResults 
-        titles = {this.state.electionIds}
-        dates = {this.dates}
-        organizations = {this.organizers}
+        <UpcommingElections
+          titles={this.state.electionIds}
+          dates={this.dates}
+          organizations={this.organizers}
         />
+      </div>
+    );
+  };
+
+  renderPastElections = () => {
+    //console.log(this.state.selectedElection)
+    return (
+      <div>
+        <Header name={this.props.name} />
+        <NavBar selectType={this.selectType} />
+        <div className="section">
+          <div className="columns">
+            <div className="column is-4">
+              <ElectionList
+                title={this.state.electionType}
+                selectedElection={this.selectElection}
+                list={this.state.electionIds}
+              />
+              {this.state.loading}
+            </div>
+            <div className="column is-8">
+              <ElectionResults election={this.state.selectedElection} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   };
