@@ -25,7 +25,7 @@ class Organizer extends React.Component {
                 edit: false
               },
               {
-                name: "choice1",
+                name: "choice2",
                 edit: false
               }
             ]
@@ -125,22 +125,30 @@ class Organizer extends React.Component {
 
     render =  function() {
         var foo = []
-        foo.push(<div>Postions <button type="button" onClick = {this.addPosition}>+</button></div>)
+        var realFoo = []
+        var foa = []
         for(var i = 0; i < this.positions.length; i += 1){
             //(a < b) ? 'minor' : 'major'
-            foo.push(<dt>
+            foo.push(<div>
+              <dt>
               {(this.positions[i].edit) ? <input type="text" onChange={this.makeHandlePositionChange(i)} />: this.positions[i].name} 
-              <button type="button" onClick = {this.makeRemovePosition(i)}>-</button>
-              <button type="button" onClick = {this.makeEditPosition(i)}>EDIT</button>
-            </dt>)
-            foo.push((<div>Choices <button type="button" onClick={this.makeAddChoice(i)}>+</button></div>))
-            for(var j = 0; j < this.positions[i].choices.length; j += 1){
-              foo.push(<dd>
+              <button className ="button" type="button" onClick = {this.makeRemovePosition(i)}>-</button>
+              <button className ="button" type="button" onClick = {this.makeEditPosition(i)}>EDIT</button>
+            </dt>
+            Choices <button type="button" onClick={this.makeAddChoice(i)}>+</button></div>)
+
+        for(var j = 0; j < this.positions[i].choices.length; j += 1){
+              foa.push(<dd>
                 {(this.positions[i].choices[j].edit) ? <input type="text" onChange={this.makeHandleChoiceChange(i,j)} />: this.positions[i].choices[j].name}
-                <button type="button" onClick = {this.makeRemoveChoice(i,j)}>-</button>
-                <button type="button" onClick = {this.makeEditChoice(i,j)}>EDIT</button>
+                <button className ="button" type="button" onClick = {this.makeRemoveChoice(i,j)}>-</button>
+                <button className ="button" type="button" onClick = {this.makeEditChoice(i,j)}>EDIT</button>
               </dd>)
             }
+           
+
+            realFoo.push(<div className="box">{foo[i]} {foa}</div>)
+
+            foa = [];
         }
         
         return(
@@ -150,15 +158,16 @@ class Organizer extends React.Component {
               <a className="navbar-item selectedRow" >Create Elections</a>
               <a className="navbar-item" >Election Results</a>
 -           </nav>
-            <div>
-              <h1>Election Creation</h1>
+            <div className = "section is-horizontal-center" >
+              <h1 className = "title">Election Creation</h1>
               <div>
                 Election Name <input type="text" name="electionName"></input>
               </div>
-            </div>
-            <dl>
-              {foo}
+              <dl className= "section is-horizontal-center" >
+              <button className ="button"  type="button" onClick = {this.addPosition}>Add Position</button>
+              {realFoo}
             </dl>
+            </div>
 -         </div>);    
     }
 }

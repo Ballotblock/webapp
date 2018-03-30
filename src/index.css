@@ -34,6 +34,7 @@ abbr{
 
 .is-horizontal-center {
   justify-content: center;
+  text-align: center;
 }
 
 
