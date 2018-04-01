@@ -4,10 +4,12 @@ import Organizer from "../components/OrganizerComponents/Organizer"
 import * as Servers from './settings'
 import Cookies from 'js-cookie';
 
+import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
-
+    
     var session = Cookies.get('name');
     var type = Cookies.get('type');
     this.registration_url = Servers.REGISTRATION_SERVER;
@@ -104,8 +106,6 @@ class Login extends React.Component {
         }
         //below we store a cookie manually on client side
         var token = JSON.stringify(json);
-        // document.cookie = "token=" + token;
-        // document.cookie = "username=" + username;
         var account_type = json.account_type;
 
         Cookies.set('token',token);
@@ -151,12 +151,14 @@ class Login extends React.Component {
 
   // the component that is rendered if the voter is authorized
   renderContent = function() {
-    return <Content name={this.state.name} voterId={this.state.name} />;
+    return <Redirect to="/voter/Current Elections" />
+    //return <Content name={this.state.name} voterId={this.state.name} />;
   };
 
   //the componnents that is rendered if the election organizer is authorized
   renderOrganizer = function() {
-    return <Organizer name={this.state.name} organizerId={this.state.name}></Organizer>
+    return <Redirect to="/organizer/Create" />
+    //return <Organizer name={this.state.name} organizerId={this.state.name}></Organizer>
   }
 
   renderLogin = function() {

@@ -1,10 +1,13 @@
 import React from "react";
 import Header from "../Header"
+import Cookies from 'js-cookie';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 class Organizer extends React.Component {
     
     constructor(props){
         super(props)
+        this.name = Cookies.get("name")
         this.positions = [
           {
             name: "prop1",
@@ -124,6 +127,19 @@ class Organizer extends React.Component {
 
 
     render =  function() {
+      // make sure user is logged in 
+      if(!this.name){
+        return  <Redirect to="/"/>
+      }
+
+      //make sure user is a creator
+      var type = Cookies.get('type');
+      if(!type || type != 2 )
+      {
+        return  <Redirect to="/"/>
+      }
+
+
         var foo = []
         var realFoo = []
         var foa = []
@@ -135,7 +151,7 @@ class Organizer extends React.Component {
               <button className ="button" type="button" onClick = {this.makeRemovePosition(i)}>-</button>
               <button className ="button" type="button" onClick = {this.makeEditPosition(i)}>EDIT</button>
             </dt>
-            Choices <button type="button" onClick={this.makeAddChoice(i)}>+</button></div>)
+            <button className = "button" type="button" onClick={this.makeAddChoice(i)}> Add Choice</button></div>)
 
         for(var j = 0; j < this.positions[i].choices.length; j += 1){
               foa.push(<dd>
@@ -153,7 +169,7 @@ class Organizer extends React.Component {
         
         return(
           <div>
-            <Header name={this.props.name}></Header>
+            <Header name={this.name}></Header>
             <nav className="navbar">
               <a className="navbar-item selectedRow" >Create Elections</a>
               <a className="navbar-item" >Election Results</a>
@@ -165,6 +181,7 @@ class Organizer extends React.Component {
               </div>
               <dl className= "section is-horizontal-center" >
               <button className ="button"  type="button" onClick = {this.addPosition}>Add Position</button>
+              <button className = "button" type = "button" > Create Election </button>
               {realFoo}
             </dl>
             </div>

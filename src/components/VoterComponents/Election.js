@@ -26,8 +26,8 @@ class Election extends React.Component {
     var url =
       Servers.API_SERVER + "election/" +
       nextProps.election +
-      "?id=" +
-    this.props.voter;
+      "?id=" + this.props.voter;
+    console.log(url);
     this.window = "";
     this.propositions = [];
     this.title = nextProps.election;
@@ -39,6 +39,7 @@ class Election extends React.Component {
         return response.json();
       })
       .then(json => {
+        console.log(json)
         this.propositions = json[0].election.propositions;
         var start = json[0].election.startDate;
         var end = json[0].election.endDate;
@@ -120,6 +121,7 @@ class Election extends React.Component {
       })
       .then(json => {
         this.voted = true;
+        this.selection = this.answers;
         this.setState({
           update: "update",
           loading: ""

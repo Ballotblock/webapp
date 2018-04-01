@@ -2,19 +2,28 @@ import React from "react";
 import Header from "../Header";
 import Election from "./Election";
 import NavBar from "./NavBar";
-import { Router, Route } from "react-router";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import ElectionList from "./ElectionList";
 import ElectionResults from "./ElectionResults";
 import UpcommingElections from "./UpcommingElections";
 import * as Servers from "../settings";
 import moment from "moment";
+import Cookies from 'js-cookie';
+
 
 class Content extends React.Component {
   constructor(props) {
     super(props);
+
+    this.name = Cookies.get("name");
+    
+    var urlRoute = this.props.location.pathname;
+    this.type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+
+
     this.state = {
       voterId: this.props.voterId,
-      electionType: "Current Elections",
+      electionType: this.type,
       loading: ""
     };
     this.currentIndex = 0;
@@ -22,7 +31,42 @@ class Content extends React.Component {
 
   // preform a fetch request to retrieve all current ballots
   componentWillMount(props) {
-    this.getElections("current");
+
+    // if not logged in, return
+    if(!this.name){
+      return;
+    }
+    
+    if (this.type === "Upcomming Elections") {
+      this.getElections("upcomming");
+    } else if (this.type === "Past Elections") {
+      this.getElections("past");
+    } else if (this.type === "Current Elections") {
+      this.getElections("current");
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    // check for url updates here
+    if (this.props.location !== prevProps.location) {
+      var urlRoute = this.props.location.pathname;
+      this.type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+   
+      this.titles = [];
+      this.dates = [];
+      this.setState({
+        electionType: this.type,
+        electionIds: []
+      });
+
+      if (this.type === "Upcomming Elections") {
+        this.getElections("upcomming");
+      } else if (this.type === "Past Elections") {
+        this.getElections("past");
+      } else if (this.type === "Current Elections") {
+        this.getElections("current");
+      }
+    }
   }
 
   // preforms requests to get a list of election ids
@@ -32,7 +76,7 @@ class Content extends React.Component {
     this.setState({
       loading: <div className="loading" />
     });
-    //console.log(url);
+    console.log(url);
     fetch(url)
       .then(response => {
         return response.json();
@@ -93,20 +137,8 @@ class Content extends React.Component {
    */
   selectType = type => {
     if (this.state.electionType !== type) {
-      this.titles = [];
-      this.dates = [];
-      this.setState({
-        electionType: type,
-        electionIds: []
-      });
-
-      if (type === "Upcomming Elections") {
-        this.getElections("upcomming");
-      } else if (type === "Past Elections") {
-        this.getElections("past");
-      } else if (type === "Current Elections") {
-        this.getElections("current");
-      }
+      // this below changes the url
+      this.props.history.push('/voter/' + type)
     }
   };
 
@@ -118,7 +150,7 @@ class Content extends React.Component {
   renderCurrentElections = () => {
     return (
       <div>
-        <Header name={this.props.name} />
+        <Header name={this.name} />
         <NavBar selectType={this.selectType} />
         <div className="section">
           <div className="columns">
@@ -133,7 +165,7 @@ class Content extends React.Component {
             <div className="column is-8">
               <Election
                 key={"current"}
-                voter={this.props.voterId}
+                voter={this.name}
                 index={this.currentIndex}
                 election={this.state.selectedElection}
               />
@@ -147,7 +179,7 @@ class Content extends React.Component {
   renderUpComingElections = () => {
     return (
       <div>
-        <Header name={this.props.name} />
+        <Header name={this.name} />
         <NavBar selectType={this.selectType} />
         <div className="section">
           <div className="panel-block">
@@ -176,7 +208,7 @@ class Content extends React.Component {
     //console.log(this.state.selectedElection)
     return (
       <div>
-        <Header name={this.props.name} />
+        <Header name={this.name} />
         <NavBar selectType={this.selectType} />
         <div className="section">
           <div className="columns">
@@ -198,6 +230,20 @@ class Content extends React.Component {
   };
 
   render() {
+
+
+    //check to make sure user has logged in 
+    if(!this.name){
+      return  <Redirect to="/"/>
+    }
+
+    // make sure user is a voter
+    var type = Cookies.get('type');
+    if(!type || type != 1 )
+    {
+      return  <Redirect to="/"/>
+    }
+
     if (this.state.electionType === "Current Elections") {
       return this.renderCurrentElections();
     } else if (this.state.electionType === "Upcomming Elections") {
