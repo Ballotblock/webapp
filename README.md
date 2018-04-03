@@ -25,7 +25,7 @@ This application will require javascript enabled on the browser in order for it 
     When a user logs in, a request is sent to the registration server and if sucessful, a cookie is set on the browser. 
 
   2. In content.js there is a getElections method which recieves a date parameter. It revieves a list of elections based on the date passed in. The data retrieved in only a list of election titles and possibly the organizer as well as start and end date depending on which type(past,current,upcomming) is choosen. Below is an example of the input json. 
-  """
+  ```
   [
     [
       {
@@ -34,7 +34,7 @@ This application will require javascript enabled on the browser in order for it 
     ], 
     200
   ]
-  """
+  ```
 
   3. In election.js,  in the componentWillReceiveProps method a request is made to retrieve all the details for an election. 
   Here all the propositions, startDate, endDate, and selections if any are retrieved. 
