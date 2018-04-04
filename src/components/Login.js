@@ -141,6 +141,7 @@ class Login extends React.Component {
         this.setState({ signUpError: "Account created",
         loading: "",
        });
+        this.login(username,password);
       } else {
         this.setState({ signUpError: "Unable to create account",
         loading: "" });
