@@ -1,12 +1,18 @@
 import React from "react";
 import Header from "../Header"
 import Cookies from 'js-cookie';
+import moment from "moment";
+import _ from "lodash";
+import * as Servers from '../settings'
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 class Organizer extends React.Component {
     
     constructor(props){
         super(props)
+        this.state = {
+          page: "createElection"
+        }
         this.name = Cookies.get("name")
         this.positions = [
           {
@@ -34,6 +40,9 @@ class Organizer extends React.Component {
             ]
           }
         ]
+        this.dates = {
+          format: "MM/DD/YYYY"
+        }
     }
 
     addPosition = () =>
@@ -124,22 +133,79 @@ class Organizer extends React.Component {
       return((event) => this.handleChoiceChange(event,i,j))
     }
 
+    makeElectionJson = () =>
+    { 
 
+      var outputJson = {
+        "electionTitle": "String",
+        "propositions": [],
+        "startDate": "ISO8601 String",
+        "endDate": "ISO8601 String"
+      };
 
-    render =  function() {
-      // make sure user is logged in 
-      if(!this.name){
-        return  <Redirect to="/"/>
+      outputJson.electionTitle = this.refs.electionName.value;
+      outputJson.startDate = moment(this.refs.dateStart.valueAsDate, this.dates.format).toISOString();
+      outputJson.endDate = moment(this.refs.dateEnd.valueAsDate, this.dates.format).toISOString();
+
+      _.forEach(this.positions, function(position){
+        var curProp = {
+        "question": "String",
+        "choices": [],
+        "id": "String"//election+question
       }
 
-      //make sure user is a creator
-      var type = Cookies.get('type');
-      if(!type || type != 2 )
-      {
-        return  <Redirect to="/"/>
-      }
+        curProp.question = position.name;
+
+        curProp.id = outputJson.electionTitle+curProp.question;
+
+        curProp.choices = [];
+
+        _.forEach(position.choices, function(choice){
+          curProp.choices.push(choice.name);
+        });
+
+        outputJson.propositions.push(curProp);
+
+      });
 
 
+
+      return this.createElection(outputJson);
+    }
+
+
+    createElection = (json) => {
+      var url = Servers.API_SERVER + "election?id=" + this.name;
+      var payload =  json;
+
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          //PLEASE CHANGE
+            console.log(response.status);
+            return response.json();
+          })
+        .then(json => {
+          if (!json) {
+            console.log("noJSON")
+            return false;
+          }
+          //below we store a cookie manually on client side
+
+          console.log(json);
+          this.setState({page: "createElection"})
+          return true;
+        });
+    };
+
+    updatePage = (pageName) => {
+      return (() =>  this.setState({page: pageName}))
+    };
+
+    renderCreateElections = () =>
+    {
         var foo = []
         var realFoo = []
         var foa = []
@@ -147,7 +213,7 @@ class Organizer extends React.Component {
             //(a < b) ? 'minor' : 'major'
             foo.push(<div>
               <dt>
-              {(this.positions[i].edit) ? <input type="text" onChange={this.makeHandlePositionChange(i)} />: this.positions[i].name} 
+              {(this.positions[i].edit) ? <input type="text" onChange={this.makeHandlePositionChange(i)}/>: this.positions[i].name} 
               <button className ="button" type="button" onClick = {this.makeRemovePosition(i)}>-</button>
               <button className ="button" type="button" onClick = {this.makeEditPosition(i)}>EDIT</button>
             </dt>
@@ -172,20 +238,62 @@ class Organizer extends React.Component {
             <Header name={this.name}></Header>
             <nav className="navbar">
               <a className="navbar-item selectedRow" >Create Elections</a>
-              <a className="navbar-item" >Election Results</a>
+              <a className="navbar-item" onClick={this.updatePage("electionResults")}>Election Results</a>
 -           </nav>
             <div className = "section is-horizontal-center" >
               <h1 className = "title">Election Creation</h1>
               <div>
-                Election Name <input type="text" name="electionName"></input>
+                Election Name <input type="text" ref="electionName"></input>
+              </div>
+              <div>
+                Start Date <input type="date" ref="dateStart"></input>
+              </div>
+              <div>
+                End Date <input type="date" ref="dateEnd"></input>
               </div>
               <dl className= "section is-horizontal-center" >
-              <button className ="button"  type="button" onClick = {this.addPosition}>Add Position</button>
-              <button className = "button" type = "button" > Create Election </button>
+              <button className ="button"  type="button" onClick = {this.addPosition}> Add Position </button>
+              <button className = "button" type = "button"onClick = {this.makeElectionJson} > Create Election </button>
               {realFoo}
             </dl>
             </div>
--         </div>);    
+-         </div>);   
+    }
+
+     renderElectionsResult = () =>{
+      return(
+        <div>
+          <Header name={this.name}></Header>
+          <nav className="navbar">
+            <a className="navbar-item"onClick={this.updatePage("createElection")}>Create Elections</a>
+            <a className="navbar-item selectedRow" >Election Results</a>
+  -       </nav>
+        </div>
+      )
+     }
+
+
+
+    render =  function() {
+      // make sure user is logged in 
+      if(!this.name){
+        return  <Redirect to="/"/>
+      }
+
+      //make sure user is a creator
+      var type = Cookies.get('type');
+      if(!type || type != 2 )
+      {
+        return  <Redirect to="/"/>
+      }
+
+      switch(this.state.page){
+        case "createElection":
+          return this.renderCreateElections();
+        case "electionResults":
+          return this.renderElectionsResult();
+      }
+ 
     }
 }
 
