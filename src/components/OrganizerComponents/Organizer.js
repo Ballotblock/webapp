@@ -196,6 +196,32 @@ class Organizer extends React.Component {
 
           console.log(json);
           this.setState({page: "createElection"})
+          this.positions = [
+            {
+              name: "prop1",
+              edit: false,
+              choices: [
+                {
+                  name: "choice1",
+                  edit: false
+                }
+              ]
+            }, 
+            {
+              name: "prop2",
+              edit: false,
+              choices: [
+                {
+                  name: "choice1",
+                  edit: false
+                },
+                {
+                  name: "choice2",
+                  edit: false
+                }
+              ]
+            }
+          ]
           return true;
         });
     };

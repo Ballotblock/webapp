@@ -16,6 +16,19 @@ class NavBar extends React.Component {
         this.setState({"update":"update"});
     }
 
+    componentWillReceiveProps(nextProps)
+    {
+        console.log(nextProps.electionType)
+        // set the index based on the passed in type
+        for (var i = 0 ; i < this.tabNames.length ; i ++)
+        {
+            if(nextProps.electionType === this.tabNames[i]){
+                this.currentSelection = i
+                this.setState({"update":"update"});
+            }
+        }
+    }
+
     render=  function() {
         var tabs = []
 

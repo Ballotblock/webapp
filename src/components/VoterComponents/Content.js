@@ -44,6 +44,7 @@ class Content extends React.Component {
     } else if (this.type === "Current Elections") {
       this.getElections("current");
     }
+    
   }
 
   componentDidUpdate(prevProps){
@@ -151,7 +152,9 @@ class Content extends React.Component {
     return (
       <div>
         <Header name={this.name} />
-        <NavBar selectType={this.selectType} />
+        <NavBar selectType={this.selectType} 
+           electionType = {this.state.electionType}
+        />
         <div className="section">
           <div className="columns">
             <div className="column is-4">
@@ -180,7 +183,8 @@ class Content extends React.Component {
     return (
       <div>
         <Header name={this.name} />
-        <NavBar selectType={this.selectType} />
+        <NavBar selectType={this.selectType} 
+        electionType = {this.state.electionType}/>
         <div className="section">
           <div className="panel-block">
             <p className="control has-icons-left">
@@ -209,7 +213,8 @@ class Content extends React.Component {
     return (
       <div>
         <Header name={this.name} />
-        <NavBar selectType={this.selectType} />
+        <NavBar selectType={this.selectType} 
+        electionType = {this.state.electionType}/>
         <div className="section">
           <div className="columns">
             <div className="column is-4">
@@ -230,7 +235,6 @@ class Content extends React.Component {
   };
 
   render() {
-
 
     //check to make sure user has logged in 
     if(!this.name){

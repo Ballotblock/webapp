@@ -9,7 +9,6 @@ class NavBarElement extends React.Component {
    	}
 
     render =  function() {
-        console.log(this.props.highlighted);
         return (
             <a className = {(this.props.highlighted) ? "navbar-item selectedRow" : "navbar-item"} onClick = {this.bar}>{this.props.children}</a>
         );
