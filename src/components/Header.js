@@ -1,19 +1,17 @@
 import React from "react";
 import Cookies from "js-cookie";
-import { Redirect } from 'react-router'
+import { Redirect } from "react-router";
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirect:false
-    }
+      redirect: false,
+      toggle:""
+    };
   }
   logoutEventHandler = () => {
     this.resetCookies();
-    // this.setState ({
-    //   redirect:true
-    // })
     window.location.reload();
   };
 
@@ -23,33 +21,44 @@ class Header extends React.Component {
     Cookies.remove("token");
   };
 
-  render = function() {
-
-    if(this.state.redirect){
-      console.log("Header lin 23")
-      return <Redirect to ="/" />
+  dropDownToggle = () => {
+    if(this.state.toggle === ""){
+      this.setState({
+        toggle:"is-active"
+      })
+    }else{
+      this.setState({
+        toggle:""
+      })
     }
-    else 
-    {
+  }
+
+  render = function() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    } else {
       return (
         <div className="section container">
           <nav className="level">
             <div className="level-item">
               <h1 className="title level-item is-1">BallotBlock</h1>
             </div>
-            <ul className="nav">
-              <li className="drop">
-                Welcome {this.props.name}
-                <ul>
-                  <li>
-                    <a>Account Settings</a>
-                  </li>
-                  <li>
-                    <a onClick={this.logoutEventHandler}>Logout</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <div className= {"dropdown " + this.state.toggle}>
+              <div className="dropdown-trigger">
+                <button onClick = {this.dropDownToggle} className="button">
+                  <span>Welcome {this.props.name}</span>
+                  <span className="icon is-small">
+                    <i className="fas fa-angle-down" aria-hidden="true" />
+                  </span>
+                </button>
+              </div>
+              <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                <div className="dropdown-content">
+                  <a className="dropdown-item">Settings</a>
+                  <a onClick = {this.logoutEventHandler} className="dropdown-item">Logout</a>
+                </div>
+              </div>
+            </div>
           </nav>
         </div>
       );

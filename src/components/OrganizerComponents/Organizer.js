@@ -192,10 +192,7 @@ class Organizer extends React.Component {
             console.log("noJSON")
             return false;
           }
-          //below we store a cookie manually on client side
-
           console.log(json);
-          this.setState({page: "createElection"})
           this.positions = [
             {
               name: "prop1",
@@ -222,6 +219,7 @@ class Organizer extends React.Component {
               ]
             }
           ]
+          this.setState({"update":"update"})
           return true;
         });
     };

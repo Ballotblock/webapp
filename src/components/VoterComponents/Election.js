@@ -55,6 +55,10 @@ class Election extends React.Component {
         {
           this.voted = true;
         }
+        else
+        {
+          this.voted = false;
+        }
         this.setState({
           update: "update",
           loading: ""
