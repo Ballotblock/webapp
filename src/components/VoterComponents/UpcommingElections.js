@@ -5,7 +5,7 @@ import UpcommingElectionBox from "./UpcommingElectionBox";
 class UpcommingElections extends React.Component {
 
     /**
-     * This props needs the following props passed in
+     * This component needs the following props passed in
      * titles : an array of election titles
      * dates : an array of election dates
      * organizations : an array of organizations

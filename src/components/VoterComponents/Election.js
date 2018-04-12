@@ -5,6 +5,12 @@ import moment from 'moment';
 import * as Servers from '../settings';
 
 
+
+/**
+ * This components uses the following props passed in from the parent component
+ * election : title of an election
+ * voter : the voters id used to identifity that voter
+ */
 class Election extends React.Component {
   constructor(props) {
     super(props);

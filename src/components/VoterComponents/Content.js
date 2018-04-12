@@ -209,7 +209,6 @@ class Content extends React.Component {
   };
 
   renderPastElections = () => {
-    //console.log(this.state.selectedElection)
     return (
       <div>
         <Header name={this.name} />
@@ -235,7 +234,6 @@ class Content extends React.Component {
   };
 
   render() {
-
     //check to make sure user has logged in 
     if(!this.name){
       return  <Redirect to="/"/>
