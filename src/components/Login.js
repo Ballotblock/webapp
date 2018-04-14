@@ -153,11 +153,13 @@ class Login extends React.Component {
   // the component that is rendered if the voter is authorized
   renderContent = function() {
     return <Redirect to="/voter/Current Elections" />
+    //return <Content name={this.state.name} voterId={this.state.name} />;
   };
 
   //the componnents that is rendered if the election organizer is authorized
   renderOrganizer = function() {
     return <Redirect to="/organizer/Create" />
+    //return <Organizer name={this.state.name} organizerId={this.state.name}></Organizer>
   }
 
   renderLogin = function() {

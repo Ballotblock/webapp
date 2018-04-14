@@ -16,11 +16,8 @@ class Content extends React.Component {
     super(props);
 
     this.name = Cookies.get("name");
-    
     var urlRoute = this.props.location.pathname;
     this.type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
-
-
     this.state = {
       voterId: this.props.voterId,
       electionType: this.type,
@@ -31,14 +28,12 @@ class Content extends React.Component {
 
   // preform a fetch request to retrieve all current ballots
   componentWillMount(props) {
-
     // if not logged in, return
     if(!this.name){
       return;
     }
-    
-    if (this.type === "Upcomming Elections") {
-      this.getElections("upcomming");
+    if (this.type === "Upcoming Elections") {
+      this.getElections("upcoming");
     } else if (this.type === "Past Elections") {
       this.getElections("past");
     } else if (this.type === "Current Elections") {
@@ -60,7 +55,7 @@ class Content extends React.Component {
         electionIds: []
       });
 
-      if (this.type === "Upcomming Elections") {
+      if (this.type === "Upcoming Elections") {
         this.getElections("upcomming");
       } else if (this.type === "Past Elections") {
         this.getElections("past");
@@ -209,6 +204,7 @@ class Content extends React.Component {
   };
 
   renderPastElections = () => {
+    //console.log(this.state.selectedElection)
     return (
       <div>
         <Header name={this.name} />
@@ -234,6 +230,7 @@ class Content extends React.Component {
   };
 
   render() {
+
     //check to make sure user has logged in 
     if(!this.name){
       return  <Redirect to="/"/>
@@ -248,7 +245,7 @@ class Content extends React.Component {
 
     if (this.state.electionType === "Current Elections") {
       return this.renderCurrentElections();
-    } else if (this.state.electionType === "Upcomming Elections") {
+    } else if (this.state.electionType === "Upcoming Elections") {
       return this.renderUpComingElections();
     } else if (this.state.electionType === "Past Elections") {
       return this.renderPastElections();

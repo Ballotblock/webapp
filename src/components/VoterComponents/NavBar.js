@@ -5,7 +5,7 @@ class NavBar extends React.Component {
 
     constructor(props){
         super(props)
-        this.tabNames = ["Current Elections","Upcomming Elections","Past Elections"]
+        this.tabNames = ["Current Elections","Upcoming Elections","Past Elections"]
         this.currentSelection = 0
     }
 

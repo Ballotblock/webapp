@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './bulma.css';
 import Login from "./Login"
 import Content from "./VoterComponents/Content"
 import organizer from "./OrganizerComponents/Organizer";
@@ -18,7 +17,7 @@ class App extends Component {
           <Route path = "/" exact component= {Login} />
           <Route path = "/voter/Current Elections" exact component = {Content} />
           <Route path = "/voter/Past Elections" exact component = {Content} />
-          <Route path = "/voter/Upcomming Elections" exact component = {Content} />
+          <Route path = "/voter/Upcoming Elections" exact component = {Content} />
           <Route path = "/organizer/Create" exact component = {Organizer}/>
           <Route path = "/organizer/Results" exact component = {Organizer}/>
         </Switch>

@@ -40,7 +40,7 @@ class Header extends React.Component {
       return (
         <div className="section container">
           <nav className="level">
-            <div className="level-item">
+            <div className="">
               <h1 className="title level-item is-1">BallotBlock</h1>
             </div>
             <div className= {"dropdown " + this.state.toggle}>
@@ -54,7 +54,6 @@ class Header extends React.Component {
               </div>
               <div className="dropdown-menu" id="dropdown-menu" role="menu">
                 <div className="dropdown-content">
-                  <a className="dropdown-item">Settings</a>
                   <a onClick = {this.logoutEventHandler} className="dropdown-item">Logout</a>
                 </div>
               </div>

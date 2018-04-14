@@ -5,12 +5,6 @@ import moment from 'moment';
 import * as Servers from '../settings';
 
 
-
-/**
- * This components uses the following props passed in from the parent component
- * election : title of an election
- * voter : the voters id used to identifity that voter
- */
 class Election extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +27,6 @@ class Election extends React.Component {
       Servers.API_SERVER + "election/" +
       nextProps.election +
       "?id=" + this.props.voter;
-    console.log(url);
     this.window = "";
     this.propositions = [];
     this.title = nextProps.election;
@@ -45,7 +38,6 @@ class Election extends React.Component {
         return response.json();
       })
       .then(json => {
-        console.log(json)
         this.propositions = json[0].election.propositions;
         var start = json[0].election.startDate;
         var end = json[0].election.endDate;
@@ -147,6 +139,7 @@ class Election extends React.Component {
     }
   };
 
+  // renders an election page that allows you to vote
   renderUnvotedElection() {
     var props = [];
     if (this.propositions) {
@@ -186,6 +179,8 @@ class Election extends React.Component {
     );
   }
 
+  // renders an election page that disallows you to vote
+  // the selections of the ballots are highlighted
   renderVotedElection() {
     var props = [];
     if (this.propositions) {

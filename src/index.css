@@ -16,9 +16,10 @@ nav.navbar{
   font-weight: normal;
 }
 
-th:hover {
+.customHover:hover {
   background-color: #A9A9A9;
 }
+
 
 /*
 Sets the background color to a dark grey
@@ -95,6 +96,9 @@ abbr{
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
+
+/* Below is the css for the confirm button */
 .confirm {
   position: absolute;
   z-index: 100;

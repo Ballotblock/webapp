@@ -21,7 +21,7 @@ class StaticTable extends React.Component {
       }
         return (
           <div>
-            <table  className="table is-fullwidth is-hoverable">
+            <table  className="table is-fullwidth">
               <thead>
                 <tr>
                   <td>

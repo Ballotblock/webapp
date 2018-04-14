@@ -1,10 +1,11 @@
 import React from 'react';
 import ElectionListElement from "./ElectionListElement"
 
-// this component displays a list of elections for users to click
-// as the user can click on an election to view his/her ballot
-// gui wise, its the box on the bottom left that contains a search bar on top 
-// with a list of elections
+/**
+ * this components takes a selectElection handler which is called when one of the rows is clicked
+ * needs a list of electionTitles passed in as a prop, this.props.list
+ * also optional is a selectedIndex
+ */
 class ElectionList extends React.Component {
 
     constructor(props)
@@ -42,12 +43,7 @@ class ElectionList extends React.Component {
                 {this.props.title}
             </p>
             <div className="panel-block">
-                <p className="control has-icons-left">
-                    <input className="input is-small" type="text" placeholder="search" />
-                    <span className="icon is-small is-left">
-                        <i className="fa fa-search" />
-                    </span>
-                </p>
+       
             </div>
         {electionTitles}
         </nav>      
