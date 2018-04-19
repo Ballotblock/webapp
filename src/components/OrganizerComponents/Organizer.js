@@ -224,29 +224,37 @@ class Organizer extends React.Component {
 
     return (
       <div>
-        <Header name={this.name}></Header>
+        <Header name={this.name} />
         <nav className="navbar">
-          <a className="navbar-item selectedRow" >Create Elections</a>
-          <a className="navbar-item" onClick={this.updatePage("electionResults")}>Election Results</a>
+          <a className="navbar-item selectedRow">Create Elections</a>
+          <a className="navbar-item" onClick={this.updatePage("electionResults")}>
+            My Elections
+          </a>
         </nav>
-        <div className="section is-horizontal-center" >
+        <div className="section is-horizontal-center">
           <h1 className="title">Election Creation</h1>
           <div>
-            Election Name <input type="text" ref="electionName"></input>
+            Election Name <input type="text" ref="electionName" />
           </div>
           <div>
-            Start Date <input type="date" ref="dateStart"></input>
+            Start Date <input type="date" ref="dateStart" />
           </div>
           <div>
-            End Date <input type="date" ref="dateEnd"></input>
+            End Date <input type="date" ref="dateEnd" />
           </div>
-          <dl className="section is-horizontal-center" >
-            <button className="button" type="button" onClick={this.addPosition}> Add Position </button>
-            <button className="button" type="button" onClick={this.makeElectionJson} > Create Election </button>
-            {realFoo}
-          </dl>
+          <button className="button" type="button" onClick={this.addPosition}>
+            {" "}
+            Add Position{" "}
+          </button>
         </div>
-      </div>);
+        <dl>{realFoo}</dl>
+        <div className="section is-horizontal-center">
+          <a className="button is-" onClick={this.makeElectionJson}>
+            Create Election
+          </a>
+        </div>
+      </div>
+    );
   }
 
   renderElectionsResult = () => {
@@ -255,14 +263,12 @@ class Organizer extends React.Component {
         <Header name={this.name}></Header>
         <nav className="navbar">
           <a className="navbar-item" onClick={this.updatePage("createElection")}>Create Elections</a>
-          <a className="navbar-item selectedRow" >Election Results</a>
+          <a className="navbar-item selectedRow" >My Elections</a>
         </nav>
-        <OrganizerElection/>
+        <OrganizerElection name = {this.name}/>
       </div>
     )
   }
-
-
 
   render = function () {
     // make sure user is logged in 

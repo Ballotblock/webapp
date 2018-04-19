@@ -4,6 +4,7 @@ import ElectionListElement from "./ElectionListElement"
 /**
  * this components takes a selectElection handler which is called when one of the rows is clicked
  * needs a list of electionTitles passed in as a prop, this.props.list
+ * needs a title passed in as a prop as well, this.props.title
  * also optional is a selectedIndex
  */
 class ElectionList extends React.Component {
