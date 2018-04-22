@@ -21,9 +21,6 @@ class Organizer extends React.Component {
         choices: [
           {
             name: ""
-          },
-          {
-            name: ""
           }
         ]
       }
@@ -37,10 +34,10 @@ class Organizer extends React.Component {
   addPosition = () => {
     console.log("addPosition");
     this.positions.push({
-      name: "prop" + this.positions.length,
+      name: "",
       choices: [
         {
-          name: "choice1"
+          name: ""
         }
       ]
     });
@@ -77,6 +74,14 @@ class Organizer extends React.Component {
     return (() => this.removeChoice(i, j))
   }
 
+  handleChoiceChange = (event, i, j) => {
+    this.positions[i].choices[j].name = event.target.value
+  }
+
+  handlePositionChange = (event, i) => {
+    this.positions[i].name = event.target.value
+  }
+
   makeHandlePositionChange = (i) => {
     return ((event) => this.handlePositionChange(event, i))
   }
@@ -85,6 +90,9 @@ class Organizer extends React.Component {
     this.positions[i].choices[j].name = event.target.value
   }
 
+  makeHandleChoiceChange = (i, j) => {
+    return ((event) => this.handleChoiceChange(event, i, j))
+  }
 
   makeElectionJson = () => {
     var outputJson = {
@@ -184,26 +192,26 @@ class Organizer extends React.Component {
   renderCreateElections = () => {
     var propositions = [];
     for (var i = 0; i < this.positions.length; i += 1) {
-      console.log(this.positions[i].name)
+      //console.log(this.positions[i].name)
       var question =
-        <div className="message-header">
-          <input className="input" placeholder="Your Question Here" />
+        <div key={i + "propsTitle"} className="message-header">
+          <input key={i + "question " + this.positions[i].name + this.positions[i].choices} className="input" placeholder="Your Question Here" defaultValue={this.positions[i].name} onChange={this.makeHandlePositionChange(i)} />
           <button className="delete" aria-label="delete" onClick={this.makeRemovePosition(i)} />
         </div>;
       var choices = []
       for (var j = 0; j < this.positions[i].choices.length; j += 1) {
-        console.log(this.positions[i].choices[j].name)
-        choices.push(
-          <div  className="columns">
-           <div className="column is-11">
-            <input className="input" placeholder="Your Choice Here"></input>
-            </div>
-            <div className="column is-1"><button className="delete" aria-label="delete" onClick={this.makeRemoveChoice(i, j)} />
-            </div>
-          </div>)
+        //console.log(this.positions[i].choices[j].name + " index " + j)
+        var choiceString = this.positions[i].choices[j].name
+        choices.push(<div key={i + " " + j} className="columns">
+          <div className="column is-11">
+            <input key={i + " " + j + "choices " + choiceString} className="input" placeholder="Your Choice Here" defaultValue={choiceString} onChange={this.makeHandleChoiceChange(i, j)} ></input>
+          </div>
+          <div className="column is-1"><button className="delete" aria-label="delete" onClick={this.makeRemoveChoice(i, j)} />
+          </div>
+        </div>)
       }
-      var proposition =(
-        <div className="box">
+      var proposition = (
+        <div className="box" key={i + "propsArray"}>
           <article className="message">
             {question}
             <div className="message-body">
@@ -211,7 +219,7 @@ class Organizer extends React.Component {
               <button className="button" type="button" onClick={this.makeAddChoice(i)}> Add Choice</button>
             </div>
           </article>
-      </div>);
+        </div>);
       propositions.push(proposition);
     }
 
@@ -227,21 +235,37 @@ class Organizer extends React.Component {
             My Elections
           </a>
         </nav>
-        <div className="section is-horizontal-center">
+        <div className="section ">
           <h1 className="title">Election Creation</h1>
-          <div>
-            Election Name <input type="text" ref="electionName" />
+          <div class="field has-addons">
+            <p class="control">
+              <p className="subtitle right-padding"> Election Name: </p>
+            </p>
+            <p class="control">
+              <input className="input" type="text" ref="electionName" />
+            </p>
           </div>
-          <div>
-            Start Date <input type="date" ref="dateStart" />
+          <div class="field has-addons">
+            <p class="control">
+              <p className="subtitle right-padding"> Start Date: </p>
+            </p>
+            <p class="control">
+              <input className="input" type="date" ref="dateStart" />
+            </p>
           </div>
-          <div>
-            End Date <input type="date" ref="dateEnd" />
+          <div class="field has-addons">
+            <p class="control">
+              <p className="subtitle right-padding"> End Date: </p>
+            </p>
+            <p class="control">
+              <input className="input" type="date" ref="dateEnd" />
+            </p>
           </div>
-          <button className="button" type="button" onClick={this.addPosition}>
-            Add Position
-          </button>
         </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button " type="button" onClick={this.addPosition}>
+          Add Position
+          </button>
         {propositions}
         <div className="section is-horizontal-center">
           <a className="button is-large" onClick={this.makeElectionJson}>

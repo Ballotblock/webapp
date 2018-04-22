@@ -138,7 +138,6 @@ class OrganizerElection extends React.Component {
           <div className="column is-8">
             <div className=" box">
               <strong>
-                {" "}
                 {" Come back on " + dateString + " to view the results"}
               </strong>
             </div>

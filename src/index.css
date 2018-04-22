@@ -8,8 +8,12 @@ nav.navbar{
   box-shadow: 0px 1px 1px black;
 }
 
-.input{
+.padding{
   margin:1%
+}
+
+.right-padding{
+  margin-right: 20px;
 }
 
 .normalFont{
