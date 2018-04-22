@@ -15,11 +15,11 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path = "/" exact component= {Login} />
-          <Route path = "/voter/Current Elections" exact component = {Content} />
-          <Route path = "/voter/Past Elections" exact component = {Content} />
+          <Route path = "/voter/Current Elections"  component = {Content} />
+          <Route path = "/voter/Past Elections"  component = {Content} />
           <Route path = "/voter/Upcoming Elections" exact component = {Content} />
           <Route path = "/organizer/Create" exact component = {Organizer}/>
-          <Route path = "/organizer/Results" exact component = {Organizer}/>
+          <Route path = "/organizer/MyElection"  component = {Organizer}/>
         </Switch>
       </Router>
       )

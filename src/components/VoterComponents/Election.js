@@ -31,7 +31,7 @@ class Election extends React.Component {
     this.propositions = [];
     this.title = nextProps.election;
     this.setState({
-      loading: <div className="loading" />
+      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
     });
     fetch(url)
       .then(response => {
@@ -113,7 +113,7 @@ class Election extends React.Component {
       answers: this.answers
     };
     this.setState({
-      loading: <div className="loading" />
+      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
     });
     fetch(url, {
       method: "POST",

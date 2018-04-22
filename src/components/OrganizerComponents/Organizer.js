@@ -11,10 +11,11 @@ class Organizer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "createElection"
+      page: "Create",
+      loading:""
     };
     this.name = Cookies.get("name");
-
+    this.type = "Create";
     this.positions = [
       {
         name: "",
@@ -25,11 +26,50 @@ class Organizer extends React.Component {
         ]
       }
     ];
-
     this.dates = {
       format: "MM/DD/YYYY"
     };
+    this.extractUrl()
   }
+
+
+
+  // extracts all the necessary information from the url
+  extractUrl() {
+    var urlRoute = this.props.location.pathname;
+    var title = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+    //console.log(title)
+    if(title === "Create" || title === "MyElection"){
+      this.type = title
+      this.electionTitle = ""
+    }
+    else{
+      urlRoute = urlRoute.substr(0,urlRoute.lastIndexOf('/'))
+      var type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+      console.log(type)
+      this.type = type
+      this.electionTitle = title
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    // check for url updates here
+    if (this.props.location !== prevProps.location) {
+      this.extractUrl()
+      //console.log(this.type)
+      if (this.electionTitle === "")
+      {
+        //tab update
+        this.setState({page: this.type});    
+      }
+      else
+      {
+        console.log("else")
+      }
+    }
+  }
+
+  // below are all the methods of form control
 
   addPosition = () => {
     console.log("addPosition");
@@ -162,31 +202,39 @@ class Organizer extends React.Component {
     var payload = json;
 
     console.log(payload);
-    // fetch(url, {
-    //   method: "POST",
-    //   body: JSON.stringify(payload)
-    // })
-    //   .then(response => {
-    //     //PLEASE CHANGE
-    //       console.log(response.status);
-    //       return response.json();
-    //     })
-    //   .then(json => {
-    //     if (!json) {
-    //       console.log("noJSON")
-    //       return false;
-    //     }
-    //     console.log(json);
-    //     this.positions = [
 
-    //     ]
-    //     this.setState({"update":"update"})
-    //     return true;
-    //   });
+    this.setState({
+      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'6em'} } ></i></div>
+    })
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        //PLEASE CHANGE
+          console.log(response.status);
+          return response.json();
+        })
+      .then(json => {
+        if (!json) {
+          console.log("noJSON")
+          return false;
+        }
+        console.log(json);
+        this.positions = [
+
+        ]
+        this.setState({
+          loading: "",
+          "update":"update"})
+        return true;
+      });
   };
 
   updatePage = pageName => {
-    return () => this.setState({ page: pageName });
+    this.props.history.push('/organizer/' + pageName)
+    //this.setState({ page: pageName });    
   };
 
   renderCreateElections = () => {
@@ -230,37 +278,38 @@ class Organizer extends React.Component {
           <a className="navbar-item selectedRow">Create Elections</a>
           <a
             className="navbar-item"
-            onClick={this.updatePage("electionResults")}
+            onClick={(t) =>this.updatePage("MyElection")}
           >
             My Elections
           </a>
         </nav>
         <div className="section ">
           <h1 className="title">Election Creation</h1>
-          <div class="field has-addons">
-            <p class="control">
+          <div className="field has-addons">
+            <div className="control">
               <p className="subtitle right-padding"> Election Name: </p>
-            </p>
-            <p class="control">
+            </div>
+            <p className="control">
               <input className="input" type="text" ref="electionName" />
             </p>
           </div>
-          <div class="field has-addons">
-            <p class="control">
+          <div className="field has-addons">
+            <div className="control">
               <p className="subtitle right-padding"> Start Date: </p>
-            </p>
-            <p class="control">
+            </div>
+            <p className="control">
               <input className="input" type="date" ref="dateStart" />
             </p>
           </div>
-          <div class="field has-addons">
-            <p class="control">
+          <div className="field has-addons">
+            <div className="control">
               <p className="subtitle right-padding"> End Date: </p>
-            </p>
-            <p class="control">
+            </div>
+            <p className="control">
               <input className="input" type="date" ref="dateEnd" />
             </p>
           </div>
+          {this.state.loading}
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="button " type="button" onClick={this.addPosition}>
@@ -275,6 +324,8 @@ class Organizer extends React.Component {
       </div>
     );
   };
+
+  //() => this.handleSort(column)
   renderElectionsResult = () => {
     return (
       <div>
@@ -282,7 +333,7 @@ class Organizer extends React.Component {
         <nav className="navbar">
           <a
             className="navbar-item"
-            onClick={this.updatePage("createElection")}
+            onClick={(t) =>this.updatePage("Create")}
           >
             Create Elections
           </a>
@@ -306,9 +357,9 @@ class Organizer extends React.Component {
     }
 
     switch (this.state.page) {
-      case "createElection":
+      case "Create":
         return this.renderCreateElections();
-      case "electionResults":
+      case "MyElection":
         return this.renderElectionsResult();
     }
   };

@@ -11,7 +11,9 @@ class OrganizerElection extends React.Component {
       titles: [],
       start: [],
       end: [],
-      ended: false
+      ended: false,
+      listLoading : "",
+      loading: ""
     };
     this.dateFormat = "MM/DD/YYYY";
     this.index = 0;
@@ -24,6 +26,9 @@ class OrganizerElection extends React.Component {
   // preform a request to fetch request to get all the election titles
   getMyElections = () => {
     var url = Servers.API_SERVER + "election/creator/" + this.props.name;
+    this.setState({
+      listLoading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'6em'} } ></i></div>
+    })
     fetch(url)
       .then(response => {
         return response.json();
@@ -41,7 +46,8 @@ class OrganizerElection extends React.Component {
         this.setState({
           titles: titless,
           start: starts,
-          end: ends
+          end: ends,
+          listLoading:""
         });
       });
   };
@@ -53,16 +59,20 @@ class OrganizerElection extends React.Component {
     var endDate = this.state.end[index];
     var end = moment(endDate);
     if (now < end) {
-      console.log("election has not ended");
+      //console.log("election has not ended");
       this.setState({
         ended: false
       });
     }
     // results are fetched below!
     else {
+      this.setState({
+        loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'6em'} } ></i></div>,
+        ended: true
+      })
       var url =
         Servers.API_SERVER + "election/results/" + this.state.titles[index];
-      console.log(url);
+      //console.log(url);
       fetch(url)
         .then(response => {
           return response.json();
@@ -71,7 +81,7 @@ class OrganizerElection extends React.Component {
           this.propositions = json.propositions;
           this.results = json.results;
           this.setState({
-            ended: true
+            loading:""
           });
         });
     }
@@ -116,7 +126,9 @@ class OrganizerElection extends React.Component {
     return (
       <div className="is-horizontal-center">
         <p className="subtitle">{this.title}</p>
-        <div className=" box">{charts}</div>
+        <div className=" box">{charts}
+          {this.state.loading}
+        </div>
       </div>
     );
   };
@@ -133,7 +145,9 @@ class OrganizerElection extends React.Component {
               title={"My Elections"}
               list={this.state.titles}
               selectedElection={this.selectElectionHandler}
+              index={this.index}
             />
+            {this.state.listLoading}
           </div>
           <div className="column is-8">
             <div className=" box">
@@ -157,9 +171,13 @@ class OrganizerElection extends React.Component {
               title={"My Elections"}
               list={this.state.titles}
               selectedElection={this.selectElectionHandler}
+              index={this.index}
             />
+            {this.state.listLoading}
           </div>
-          <div className="column is-8">{chart}</div>
+          <div className="column is-8">
+          {chart}
+          </div>
         </div>
       </div>
     );

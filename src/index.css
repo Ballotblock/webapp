@@ -42,66 +42,6 @@ abbr{
   text-align: center;
 }
 
-
-
-/*Below is 2 css classes for the spinner*/
-.loadingLogin{
-  width:100px;
-  height:100px;
-  border-radius:150px;
-  border:15px solid hsl(204, 86%, 53%);
-  border-top-color: silver;
-  box-sizing:border-box;
-  position:absolute;
-  top:20%;left:50%;
-  margin-top:-80px;
-  margin-left:-50px;
-  animation:loading 1.2s linear infinite;
-  -webkit-animation:loading 1.2s linear infinite;
-  
-}
-
-.loading{
-  width:100px;
-  height:100px;
-  border-radius:150px;
-  border:15px solid hsl(204, 86%, 53%);
-  border-top-color: silver;
-  box-sizing:border-box;
-  margin-left:45%;
-  animation:loading 1.2s linear infinite;
-  -webkit-animation:loading 1.2s linear infinite;
-  
-}
-
-@keyframes loading{
-  0%{transform:rotate(0deg)}
-  100%{transform:rotate(360deg)}
-}
-@-webkit-keyframes loading{
-  0%{-webkit-transform:rotate(0deg)}
-  100%{-webkit-transform:rotate(360deg)}
-}
-
-/*Below is the css for a conformation box*/
-*, *:after, *:before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-
 /* Below is the css for the confirm button */
 .confirm {
   position: absolute;

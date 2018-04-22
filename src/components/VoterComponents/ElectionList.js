@@ -12,9 +12,27 @@ class ElectionList extends React.Component {
     constructor(props)
     {
         super(props)
-        this.state = {highlightedRow:0}
+        if(this.props.index)
+        {
+            this.state = {highlightedRow:this.props.index}
+        }
+        else
+        {
+            this.state = {highlightedRow:0}
+        }
     }
     
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.index)
+        {
+            this.setState({highlightedRow:nextProps.index})
+        }else
+        {
+            this.setState({highlightedRow:0})
+        }
+  
+    }
+
     // listen for clicking an election, pass to parent function
     clickElection = (index) =>{
         this.props.selectedElection(this.props.list[index],index)

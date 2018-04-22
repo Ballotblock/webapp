@@ -84,7 +84,7 @@ class Login extends React.Component {
       password: password
     };
     this.setState({
-      loading: <div className="loadingLogin" />
+      loading:  <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
     fetch(url, {
       method: "POST",
@@ -130,7 +130,7 @@ class Login extends React.Component {
       account_type: accountType
     };
     this.setState({
-      loading: <div className="loadingLogin" />
+      loading: <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
 
     fetch(url, {
@@ -165,12 +165,12 @@ class Login extends React.Component {
   renderLogin = function() {
     return (
       <section className="hero is-fullheight">
-        {this.state.loading}
         <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
               <h3 className="title has-text-grey">Login</h3>
               <div className="box">
+              {this.state.loading}
                 <form>
                   <div className="field">
                     <div className="control">
@@ -222,12 +222,12 @@ class Login extends React.Component {
   renderSignUp = function() {
     return (
       <section className="hero  is-fullheight">
-        {this.state.loading}
         <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-5 is-offset-4">
               <h3 className="title has-text-grey">Create Account</h3>
               <div className="box">
+              {this.state.loading}
                 <form>
                   <div className="field">
                     <div className="control">

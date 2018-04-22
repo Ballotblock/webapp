@@ -18,7 +18,6 @@ class NavBar extends React.Component {
 
     componentWillReceiveProps(nextProps)
     {
-        console.log(nextProps.electionType)
         // set the index based on the passed in type
         for (var i = 0 ; i < this.tabNames.length ; i ++)
         {

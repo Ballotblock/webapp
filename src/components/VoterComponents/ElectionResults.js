@@ -9,36 +9,41 @@ import * as Servers from '../settings';
 class ElectionResults extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: ""
+    };
   }
 
   componentWillReceiveProps(nextProps){
     if (!nextProps.election) {
       return false;
     }
+    if (this.title === nextProps.election ){
+      return false;
+    }
     this.propositions = null;
     this.title = nextProps.election
     var url = Servers.API_SERVER + "election/results/" + this.title;
-    console.log(url)
+    this.setState({
+      loading: <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'4em'} } ></i></div>
+    })
+    //console.log(url)
     fetch(url)
       .then(response => {
         return response.json()
       })
       .then(json => {
-        //console.log(json)
         this.propositions = json.propositions;
         this.results = json.results
-        //console.log(this.propositions)
-        //console.log(this.results)
-
         this.setState({
-          update: "update"
+          update: "update",
+          loading: ""
         });
       })
 
   }
 
   renderChart = () => {
-
     // need an array of propositions
     // need an array of results
     var charts = []
@@ -47,8 +52,6 @@ class ElectionResults extends React.Component {
         //console.log(this.propositions[i].question)
         var choices = this.propositions[i].choices
         var answer = this.results.splice(0,this.propositions[i].choices.length)
-        //console.log(answer)
-
         var options = {
           title:this.propositions[i].question
         }
@@ -62,13 +65,13 @@ class ElectionResults extends React.Component {
         charts.push(<Chart chartType="PieChart" data={data} options={options} />)
       }
     }
-
     //console.log(charts)
     return (
       <div className="is-horizontal-center">
         <p className="subtitle">{this.title}</p>
         <div className=" box">
           {charts}
+          {this.state.loading}
         </div>
       </div>
     );

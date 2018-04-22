@@ -16,14 +16,33 @@ class Content extends React.Component {
     super(props);
 
     this.name = Cookies.get("name");
-    var urlRoute = this.props.location.pathname;
-    this.type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+    this.electionTitle = "";
+    this.extractUrl()
     this.state = {
       voterId: this.props.voterId,
       electionType: this.type,
       loading: ""
     };
     this.currentIndex = 0;
+    
+  }
+
+  // extracts all the necessary information from the url
+  extractUrl() {
+    var urlRoute = this.props.location.pathname;
+    var title = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+    //console.log(title)
+    if(title === "Upcoming Elections" || title === "Past Elections"  || title === "Current Elections" ){
+      this.type = title
+      this.electionTitle = ""
+    }
+    else{
+      urlRoute = urlRoute.substr(0,urlRoute.lastIndexOf('/'))
+      var type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
+      //console.log(type)
+      this.type = type
+      this.electionTitle = title
+    }
   }
 
   // preform a fetch request to retrieve all current ballots
@@ -32,8 +51,9 @@ class Content extends React.Component {
     if(!this.name){
       return;
     }
+    this.extractUrl()
     if (this.type === "Upcoming Elections") {
-      this.getElections("upcoming");
+      this.getElections("upcomming");
     } else if (this.type === "Past Elections") {
       this.getElections("past");
     } else if (this.type === "Current Elections") {
@@ -44,23 +64,36 @@ class Content extends React.Component {
 
   componentDidUpdate(prevProps){
     // check for url updates here
-    if (this.props.location !== prevProps.location) {
-      var urlRoute = this.props.location.pathname;
-      this.type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
-   
-      this.titles = [];
-      this.dates = [];
-      this.setState({
-        electionType: this.type,
-        electionIds: []
-      });
 
-      if (this.type === "Upcoming Elections") {
-        this.getElections("upcomming");
-      } else if (this.type === "Past Elections") {
-        this.getElections("past");
-      } else if (this.type === "Current Elections") {
-        this.getElections("current");
+    //console.log(this.props.location.pathname)
+    // console.log( prevProps.location.pathname)
+    if (this.props.location !== prevProps.location) {
+      this.extractUrl()
+      // tab update
+      if (this.electionTitle === "")
+      {
+        console.log("tab")
+        this.titles = [];
+        this.dates = [];
+        this.currentIndex = 0;
+        this.setState({
+          electionType: this.type,
+          electionIds: []
+        });
+        if (this.type === "Upcoming Elections") {
+          this.getElections("upcomming");
+        } else if (this.type === "Past Elections") {
+          this.getElections("past");
+        } else if (this.type === "Current Elections") {
+          this.getElections("current");
+        }
+      }
+      else
+      {
+        console.log("else")
+        this.setState({
+          selectedElection: this.electionTitle
+        });
       }
     }
   }
@@ -70,9 +103,9 @@ class Content extends React.Component {
   getElections = date => {
     var url = Servers.API_SERVER + "election/" + date;
     this.setState({
-      loading: <div className="loading" />
+      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
     });
-    console.log(url);
+    //console.log(url);
     fetch(url)
       .then(response => {
         return response.json();
@@ -100,11 +133,33 @@ class Content extends React.Component {
             this.organizers.push(org);
           }
         }
-        this.setState({
-          electionIds: electionIds, //array of elections
-          selectedElection: electionIds[0], // index of the current selected election, starts with the first election created
-          loading: ""
-        });
+
+
+        if(this.electionTitle){
+          //console.log(this.electionTitle)
+          // check to make sure there is an election in election list
+          var index = 0;
+          for (var i = 0 ; i < electionIds.length ; i++){
+            if(this.electionTitle == electionIds[i]){
+              index = i
+            }
+          }
+          this.currentIndex = index;
+          this.setState({
+            electionIds: electionIds, //array of elections
+            selectedElection: electionIds[index], // index of the current selected election, starts with the first election created
+            loading: ""
+          });
+        }
+        else{
+          this.currentIndex = 0;
+          this.setState({
+            electionIds: electionIds, //array of elections
+            selectedElection: electionIds[0], // index of the current selected election, starts with the first election created
+            loading: ""
+ 
+          });
+        }
       });
   };
 
@@ -122,10 +177,14 @@ class Content extends React.Component {
      * This is for the current elections tab
      */
   selectElection = (newElection, index) => {
+    console.log("select");
     this.currentIndex = index;
-    this.setState({
-      selectedElection: newElection
-    });
+    console.log(this.state.selectedElection) // request made after this
+    this.props.history.push('/voter/' + this.type + "/" + newElection)
+    // this.setState({
+    //   selectedElection: newElection
+    // });
+
   };
 
   /**
@@ -193,6 +252,7 @@ class Content extends React.Component {
               </span>
             </p>
           </div>
+          {this.state.loading}
         </div>
         <UpcommingElections
           titles={this.state.electionIds}
@@ -204,7 +264,7 @@ class Content extends React.Component {
   };
 
   renderPastElections = () => {
-    //console.log(this.state.selectedElection)
+    //console.log(this.state.electionIds)
     return (
       <div>
         <Header name={this.name} />
@@ -217,6 +277,7 @@ class Content extends React.Component {
                 title={this.state.electionType}
                 selectedElection={this.selectElection}
                 list={this.state.electionIds}
+                index = {this.currentIndex}
               />
               {this.state.loading}
             </div>
