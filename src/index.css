@@ -24,6 +24,16 @@ nav.navbar{
   background-color: #A9A9A9;
 }
 
+.in-front{
+  z-index: 100;
+  position: absolute;
+  background: #E2E2E2;
+  top: 35%;
+  left: 50%;
+  border-radius: 10px;
+  border-top: 1px solid white;
+  animation: fade 1s ease 1 forwards;
+}
 
 /*
 Sets the background color to a dark grey

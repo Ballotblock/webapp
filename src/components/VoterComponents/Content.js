@@ -59,20 +59,18 @@ class Content extends React.Component {
     } else if (this.type === "Current Elections") {
       this.getElections("current");
     }
-    
   }
 
   componentDidUpdate(prevProps){
     // check for url updates here
-
     //console.log(this.props.location.pathname)
     // console.log( prevProps.location.pathname)
     if (this.props.location !== prevProps.location) {
       this.extractUrl()
       // tab update
+      console.log("update")
       if (this.electionTitle === "")
       {
-        console.log("tab")
         this.titles = [];
         this.dates = [];
         this.currentIndex = 0;
@@ -90,7 +88,6 @@ class Content extends React.Component {
       }
       else
       {
-        console.log("else")
         this.setState({
           selectedElection: this.electionTitle
         });
@@ -177,14 +174,18 @@ class Content extends React.Component {
      * This is for the current elections tab
      */
   selectElection = (newElection, index) => {
-    console.log("select");
-    this.currentIndex = index;
-    console.log(this.state.selectedElection) // request made after this
-    this.props.history.push('/voter/' + this.type + "/" + newElection)
+    if(this.currentIndex == index){
+      console.log("same")
+      return 
+    }
+    else{
+      this.currentIndex = index;
+      this.props.history.push('/voter/' + this.type + "/" + newElection)
+    }
+     //console.log(this.state.selectedElection) 
     // this.setState({
     //   selectedElection: newElection
     // });
-
   };
 
   /**

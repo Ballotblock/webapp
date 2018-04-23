@@ -1,8 +1,10 @@
 import React from "react";
 import Table from "./Table";
 import StaticTable from "./StaticTable";
-import moment from 'moment';
+import moment, { version } from 'moment';
 import * as Servers from '../settings';
+import QRCode from 'qrcode.react';
+import Scanner from './Scanner';
 
 
 class Election extends React.Component {
@@ -13,7 +15,9 @@ class Election extends React.Component {
     this.voted = false;
     this.state = {
       loading: "",
-      confirm:""
+      confirm:"",
+      qr:false,
+      verify:false
     };
   }
 
@@ -27,7 +31,6 @@ class Election extends React.Component {
       Servers.API_SERVER + "election/" +
       nextProps.election +
       "?id=" + this.props.voter;
-    this.window = "";
     this.propositions = [];
     this.title = nextProps.election;
     this.setState({
@@ -42,6 +45,7 @@ class Election extends React.Component {
         var start = json[0].election.startDate;
         var end = json[0].election.endDate;
         var iso = moment(start);
+        this.window = "";
         this.window += (iso.format('MMMM Do YYYY') + " - ");
         iso = moment(end);
         this.window += (iso.format('MMMM Do YYYY'));
@@ -59,7 +63,9 @@ class Election extends React.Component {
         }
         this.setState({
           update: "update",
-          loading: ""
+          loading: "",
+          qr:false,
+          verify:false
         });
       });
   }
@@ -122,11 +128,12 @@ class Election extends React.Component {
         return response.json();
       })
       .then(json => {
-        this.voted = true;
+        
         this.selection = this.answers;
         this.setState({
           update: "update",
-          loading: ""
+          loading: "",
+          qr:true
         });
       });
   }
@@ -138,6 +145,21 @@ class Election extends React.Component {
       console.log("ERROR, answers is null");
     }
   };
+
+
+  doneHandler = () => {
+    this.voted = true;
+    this.setState({
+      qr : false,
+      verify:false
+    })
+  }
+
+  verifyHandler=() =>{
+    this.setState({
+      verify:true
+    })
+  }
 
   // renders an election page that allows you to vote
   renderUnvotedElection() {
@@ -168,12 +190,35 @@ class Election extends React.Component {
         );
       }
     }
+
+    var code = ""
+    if(this.state.qr){
+      code =
+      (<div className="has-text-centered is-horizontal-center in-front" >
+        <p>
+          Take a picture of this and use it to verify your vote!
+      </p>
+        <div className="section">
+          <strong>{this.title}</strong>
+          <div>
+            <QRCode size="256" value={this.title + "/" + this.props.voter} />
+          </div>
+        </div>
+        <a
+          key={this.title + "done"}
+          onClick={this.doneHandler}
+          className="button is-medium"
+        > Done </a>
+      </div>)
+    }
+
     return (
       <div className="has-text-centered is-horizontal-center">
         {this.state.confirm}
+        {code}
         <h1 className="title">{this.title}</h1>
-        {this.state.loading}
         <h2 className="subtitle"> {this.window} </h2>
+        {this.state.loading}
         {props}
       </div>
     );
@@ -195,12 +240,40 @@ class Election extends React.Component {
         );
       }
     }
+
+    var scan = "";
+    if(this.state.verify)
+    {
+      scan = 
+        <div className="has-text-centered is-horizontal-center in-front">
+          <Scanner 
+            title = {this.title}
+            voter = {this.props.voter}
+          /> 
+          <a
+          key={this.title + "done"}
+          onClick={this.doneHandler}
+          className="button is-medium"
+        > Done </a>
+        </div>
+      
+    }
+
+
     return (
       <div className="has-text-centered is-horizontal-center">
         <h1 className="title">{this.title}</h1>
         {this.state.loading}
+        {scan}
         <h2 className="subtitle"> {this.window} </h2>
         {props}
+        <a
+            key={this.title + "verify"}
+            onClick = {this.verifyHandler}
+            className="button is-large"
+          >
+            Verify
+          </a>
       </div>
     );
   }
