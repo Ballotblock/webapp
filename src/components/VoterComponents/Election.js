@@ -34,7 +34,7 @@ class Election extends React.Component {
     this.propositions = [];
     this.title = nextProps.election;
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
+      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
     });
     fetch(url)
       .then(response => {
@@ -119,7 +119,7 @@ class Election extends React.Component {
       answers: this.answers
     };
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
+      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
     });
     fetch(url, {
       method: "POST",
@@ -183,7 +183,7 @@ class Election extends React.Component {
           <a
             key={this.title + "submit"}
             onClick={this.voteHandler}
-            className="button is-large"
+            className="button is-large is-info is-outlined"
           >
             Submit
           </a>
@@ -198,7 +198,7 @@ class Election extends React.Component {
         <p>
           Take a picture of this and use it to verify your vote!
       </p>
-        <div className="section">
+        <div className="section has-text-info">
           <strong>{this.title}</strong>
           <div>
             <QRCode size="256" value={this.title + "/" + this.props.voter} />
@@ -207,7 +207,7 @@ class Election extends React.Component {
         <a
           key={this.title + "done"}
           onClick={this.doneHandler}
-          className="button is-medium"
+          className="button is-medium is-info is-outlined"
         > Done </a>
       </div>)
     }
@@ -216,8 +216,8 @@ class Election extends React.Component {
       <div className="has-text-centered is-horizontal-center">
         {this.state.confirm}
         {code}
-        <h1 className="title">{this.title}</h1>
-        <h2 className="subtitle"> {this.window} </h2>
+        <h1 className="title is-2 has-text-info">{this.title}</h1>
+        <h2 className="subtitle is-3 has-text-info"> {this.window} </h2>
         {this.state.loading}
         {props}
       </div>
@@ -253,7 +253,7 @@ class Election extends React.Component {
           <a
           key={this.title + "done"}
           onClick={this.doneHandler}
-          className="button is-medium"
+          className="button is-medium is-info is-outlined"
         > Done </a>
         </div>
       
@@ -262,15 +262,15 @@ class Election extends React.Component {
 
     return (
       <div className="has-text-centered is-horizontal-center">
-        <h1 className="title">{this.title}</h1>
+        <h1 className="title is-2 has-text-info">{this.title}</h1>
         {this.state.loading}
         {scan}
-        <h2 className="subtitle"> {this.window} </h2>
+        <h2 className="subtitle has-text-info"> {this.window} </h2>
         {props}
         <a
             key={this.title + "verify"}
             onClick = {this.verifyHandler}
-            className="button is-large"
+            className="button is-large is-info is-outlined"
           >
             Verify
           </a>

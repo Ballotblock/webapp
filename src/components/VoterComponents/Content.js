@@ -100,7 +100,7 @@ class Content extends React.Component {
   getElections = date => {
     var url = Servers.API_SERVER + "election/" + date;
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'fontSize':'6em'} } ></i></div>
+      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
     });
     //console.log(url);
     fetch(url)
@@ -205,7 +205,7 @@ class Content extends React.Component {
 
   renderCurrentElections = () => {
     return (
-      <div>
+      <div className="">
         <Header name={this.name} />
         <NavBar selectType={this.selectType} 
            electionType = {this.state.electionType}
@@ -220,7 +220,7 @@ class Content extends React.Component {
               />
               {this.state.loading}
             </div>
-            <div className="column is-8">
+            <div className="column is-6 is-offset-1">
               <Election
                 key={"current"}
                 voter={this.name}
@@ -241,18 +241,9 @@ class Content extends React.Component {
         <NavBar selectType={this.selectType} 
         electionType = {this.state.electionType}/>
         <div className="section">
-          <div className="panel-block">
-            <p className="control has-icons-left">
-              <input
-                className="input is-small"
-                type="text"
-                placeholder="search"
-              />
-              <span className="icon is-small is-left">
-                <i className="fa fa-search" />
-              </span>
-            </p>
-          </div>
+            <h2 className="subtitle is-3 has-text-info">
+              Upcoming Elections
+            </h2>
           {this.state.loading}
         </div>
         <UpcommingElections
@@ -282,7 +273,7 @@ class Content extends React.Component {
               />
               {this.state.loading}
             </div>
-            <div className="column is-8">
+            <div className="column is-6 is-offset-1">
               <ElectionResults election={this.state.selectedElection} />
             </div>
           </div>

@@ -10,7 +10,9 @@ class NavBarElement extends React.Component {
 
     render =  function() {
         return (
-            <a className = {(this.props.highlighted) ? "navbar-item selectedRow" : "navbar-item"} onClick = {this.bar}>{this.props.children}</a>
+
+            <a className = {(this.props.highlighted) ? "navbar-item selectedRow has-text-info" : "navbar-item"} onClick = {this.bar}>{this.props.children}</a>
+
         );
     }
 }

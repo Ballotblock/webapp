@@ -5,8 +5,19 @@ body {
 }
 
 nav.navbar{
-  box-shadow: 0px 1px 1px black;
+  box-shadow: 0px 1px 1px black; padding-left: 34%;
 }
+
+strong.has-text-info { padding-left: 3%; }
+small { padding-left: 3% }
+
+.back { background-color: #2a2a2a; }
+
+a.selectedrow {
+  background-color: #ffffff;
+}
+
+a.navbar-item { color: #ffffff; }
 
 .padding{
   margin:1%
@@ -21,7 +32,7 @@ nav.navbar{
 }
 
 .customHover:hover {
-  background-color: #A9A9A9;
+  background-color: whitesmoke;
 }
 
 .in-front{
@@ -39,8 +50,8 @@ nav.navbar{
 Sets the background color to a dark grey
 Class is added to a <tr> row when a choice is selected for a specific proposition 
  */
-.selectedRow {
-  background-color: #A9A9A9;
+.selectRow {
+  background-color: #cce6ff;
 }
 
 abbr{
@@ -108,7 +119,11 @@ abbr{
   background: #EFEFEF;
 }
 
-h1.title { font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; display: inline-block; }
-
-
-
+.title { font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; display: inline-block; }
+div.box { box-shadow: 0 0 3px black; background-color: white;}
+div.message-header { background-color: #209cee; }
+article.message { box-shadow: 0 0 1px black; background-color: whitesmoke;}
+div.back { background-color: #f0f8ff; }
+div.section { padding-left: 1%; }
+h2.subtitle { padding-left: 0%; }
+p.panel-heading { background-color: #209cee; }

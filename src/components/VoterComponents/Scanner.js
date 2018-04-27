@@ -25,9 +25,9 @@ class Scanner extends React.Component {
                 })
             }else
             {
-                this.setState({
-                    msg:"QR code does not match vote"
-                })
+               this.setState({
+                msg:"QR code does not match vote"
+               })
             }
         }
     }

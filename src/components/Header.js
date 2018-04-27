@@ -53,8 +53,8 @@ class Header extends React.Component {
                   <div className="dropdown-trigger">
                     <button onClick = {this.dropDownToggle} className="button is-info is-inverted is-outlined level-item" aria-hidden="true">
                       <span>&nbsp;&nbsp;Welcome {this.props.name}</span>
-                      <span className="icon is-small is-info">
-                        <i className="far fa-angle-down" aria-hidden="true" />
+                      <span className="icon is-info">
+                        <i className="fa fa-angle-down" aria-hidden="true" />
                       </span>&nbsp;&nbsp;
                     </button>
                   </div>

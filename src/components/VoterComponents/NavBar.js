@@ -37,7 +37,7 @@ class NavBar extends React.Component {
         }
             
         return (
-            <nav className="navbar">
+            <nav className="navbar is-info">
                 {tabs}
             </nav>
         );

@@ -204,7 +204,7 @@ class Organizer extends React.Component {
     console.log(payload);
 
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'6em'} } ></i></div>
+      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x"></i></div>
     })
 
     fetch(url, {
@@ -259,12 +259,12 @@ class Organizer extends React.Component {
         </div>)
       }
       var proposition = (
-        <div className="box" key={i + "propsArray"}>
+        <div className="panel" key={i + "propsArray"}>
           <article className="message">
             {question}
             <div className="message-body">
               {choices}
-              <button className="button" type="button" onClick={this.makeAddChoice(i)}> Add Choice</button>
+              <button className="button is-info" type="button" onClick={this.makeAddChoice(i)}> Add Choice</button>
             </div>
           </article>
         </div>);
@@ -274,8 +274,8 @@ class Organizer extends React.Component {
     return (
       <div>
         <Header name={this.name} />
-        <nav className="navbar">
-          <a className="navbar-item selectedRow">Create Elections</a>
+        <nav className="navbar is-info">
+          <a className="navbar-item selectedRow has-text-info">Create Elections</a>
           <a
             className="navbar-item"
             onClick={(t) =>this.updatePage("MyElection")}
@@ -284,18 +284,19 @@ class Organizer extends React.Component {
           </a>
         </nav>
         <div className="section ">
-          <h1 className="title">Election Creation</h1>
+            <h2 className="subtitle is-2 has-text-info">Election Creation</h2>
           <div className="field has-addons">
             <div className="control">
-              <p className="subtitle right-padding"> Election Name: </p>
+              <p className="subtitle right-padding"> &nbsp;Election Name: </p>
             </div>
             <p className="control">
-              <input className="input" type="text" ref="electionName" />
+              <input className="input" type="text" placeholder="election name" ref="electionName" />
             </p>
           </div>
+
           <div className="field has-addons">
             <div className="control">
-              <p className="subtitle right-padding"> Start Date: </p>
+              <p className="subtitle right-padding"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Start Date: </p>
             </div>
             <p className="control">
               <input className="input" type="date" ref="dateStart" />
@@ -303,7 +304,7 @@ class Organizer extends React.Component {
           </div>
           <div className="field has-addons">
             <div className="control">
-              <p className="subtitle right-padding"> End Date: </p>
+              <p className="subtitle right-padding"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End Date: </p>
             </div>
             <p className="control">
               <input className="input" type="date" ref="dateEnd" />
@@ -311,13 +312,13 @@ class Organizer extends React.Component {
           </div>
           {this.state.loading}
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button " type="button" onClick={this.addPosition}>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button is-info" type="button" onClick={this.addPosition}>
           Add Position
-          </button>
-        {propositions}
-        <div className="section is-horizontal-center">
-          <a className="button is-large" onClick={this.makeElectionJson}>
+        </button>
+            {propositions}
+        <div className="section is-horizontal-left">
+          <a className="button is-large is-info" onClick={this.makeElectionJson}>
             Create Election
           </a>
         </div>
@@ -330,14 +331,14 @@ class Organizer extends React.Component {
     return (
       <div>
         <Header name={this.name} />
-        <nav className="navbar">
+        <nav className="navbar is-info">
           <a
             className="navbar-item"
             onClick={(t) =>this.updatePage("Create")}
           >
             Create Elections
           </a>
-          <a className="navbar-item selectedRow">My Elections</a>
+          <a className="navbar-item selectedRow has-text-info">My Elections</a>
         </nav>
         <OrganizerElection name={this.name} />
       </div>

@@ -27,7 +27,7 @@ class Table extends React.Component {
         var class_name = ""
         if(this.state.highlightrow === i)
         {
-          class_name = "selectedRow"
+          class_name = "selectRow"
         }
         rows.push(<TableRow name={this.props.question} highlight = {class_name}  key = {i} index = {i} rowClickHandler = {this.rowClickHandler}>{this.props.choices[i]}</TableRow>)
       }

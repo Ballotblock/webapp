@@ -11,7 +11,7 @@ class UpcommingElectionBox extends React.Component {
               <div className="media-content">
                 <div className="content">
                   <p>  
-                    <strong>{this.props.title}</strong> 
+                    <strong className="has-text-info">{this.props.title}</strong>
                     <br />
                     <small>{this.props.date}</small>
                     <br />
