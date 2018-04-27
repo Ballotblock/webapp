@@ -96,7 +96,7 @@ class Organizer extends React.Component {
 
   addChoice = (index) => {
     this.positions[index].choices.push({
-      name: "new choice",
+      name: "",
     })
     this.setState({ "update": "update" });
   }
