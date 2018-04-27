@@ -25,7 +25,7 @@ class ElectionResults extends React.Component {
     this.title = nextProps.election
     var url = Servers.API_SERVER + "election/results/" + this.title;
     this.setState({
-      loading: <div><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
+      loading: <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     })
     //console.log(url)
     fetch(url)

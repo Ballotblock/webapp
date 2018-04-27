@@ -46,7 +46,7 @@ class Organizer extends React.Component {
     else{
       urlRoute = urlRoute.substr(0,urlRoute.lastIndexOf('/'))
       var type = urlRoute.substr(urlRoute.lastIndexOf('/') + 1);
-      console.log(type)
+      //console.log(type)
       this.type = type
       this.electionTitle = title
     }
@@ -72,7 +72,7 @@ class Organizer extends React.Component {
   // below are all the methods of form control
 
   addPosition = () => {
-    console.log("addPosition");
+    //console.log("addPosition");
     this.positions.push({
       name: "",
       choices: [
@@ -96,7 +96,7 @@ class Organizer extends React.Component {
 
   addChoice = (index) => {
     this.positions[index].choices.push({
-      name: "new choice",
+      name: "",
     })
     this.setState({ "update": "update" });
   }
@@ -160,7 +160,7 @@ class Organizer extends React.Component {
     if (end.dayOfYear() <= now.dayOfYear()) {
       errorMsg =
         "Check your dates, you cannot create elections that have passed";
-    } else if (start.dayOfYear() + 1 < now.dayOfYear()) {
+    } else if (start.dayOfYear() + 2 < now.dayOfYear()) {
       errorMsg =
         "Check your dates, you cannot create elections that have already started";
     } else if (end.dayOfYear() < start.dayOfYear()) {
@@ -201,10 +201,10 @@ class Organizer extends React.Component {
     var url = Servers.API_SERVER + "election?id=" + this.name;
     var payload = json;
 
-    console.log(payload);
+    //console.log(payload);
 
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x"></i></div>
+      loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'6em'} } ></i></div>
     })
 
     fetch(url, {
@@ -213,15 +213,15 @@ class Organizer extends React.Component {
     })
       .then(response => {
         //PLEASE CHANGE
-          console.log(response.status);
+         // console.log(response.status);
           return response.json();
         })
       .then(json => {
         if (!json) {
-          console.log("noJSON")
+          //console.log("noJSON")
           return false;
         }
-        console.log(json);
+        //console.log(json);
         this.positions = [
 
         ]
@@ -275,7 +275,7 @@ class Organizer extends React.Component {
       <div>
         <Header name={this.name} />
         <nav className="navbar is-info">
-          <a className="navbar-item selectedRow has-text-info">Create Elections</a>
+          <a className="navbar-item selectedrow has-text-info">Create Elections</a>
           <a
             className="navbar-item"
             onClick={(t) =>this.updatePage("MyElection")}
@@ -317,7 +317,7 @@ class Organizer extends React.Component {
           Add Position
         </button>
             {propositions}
-        <div className="section is-horizontal-left">
+        <div className="section is-horizontal-center">
           <a className="button is-large is-info" onClick={this.makeElectionJson}>
             Create Election
           </a>
@@ -338,7 +338,7 @@ class Organizer extends React.Component {
           >
             Create Elections
           </a>
-          <a className="navbar-item selectedRow has-text-info">My Elections</a>
+          <a className="navbar-item selectedrow has-text-info">My Elections</a>
         </nav>
         <OrganizerElection name={this.name} />
       </div>

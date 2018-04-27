@@ -12,7 +12,7 @@ class StaticTable extends React.Component {
           var class_name = "normalFont"
           if(this.props.highlightrow === i)
           {
-            class_name += " selectedRow"
+            class_name += " selectRow"
           }
           rows.push(<tr key={i+this.props.question}>
               <th className={class_name}>{this.props.choices[i]}</th>

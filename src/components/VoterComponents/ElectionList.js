@@ -50,12 +50,12 @@ class ElectionList extends React.Component {
                 var class_name = ""
                 if(this.state.highlightedRow === i)
                 {
-                    class_name = "selectRow"
+                    class_name = "selectedRow"
                 }
                 electionTitles.push(<ElectionListElement key = {i} index = {i} class_name = {class_name} clickElectionHandler = {this.clickElection} >{this.props.list[i]}</ElectionListElement>)
             }
         }
-        
+
         return(
         <nav className="panel">
             <p className="panel-heading has-text-white">

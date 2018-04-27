@@ -175,7 +175,6 @@ class Content extends React.Component {
      */
   selectElection = (newElection, index) => {
     if(this.currentIndex == index){
-      console.log("same")
       return 
     }
     else{

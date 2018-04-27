@@ -27,7 +27,7 @@ class OrganizerElection extends React.Component {
   getMyElections = () => {
     var url = Servers.API_SERVER + "election/creator/" + this.props.name;
     this.setState({
-      listLoading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
+      listLoading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     })
     fetch(url)
       .then(response => {
@@ -67,7 +67,7 @@ class OrganizerElection extends React.Component {
     // results are fetched below!
     else {
       this.setState({
-        loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x"></i></div>,
+        loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>,
         ended: true
       })
       var url =

@@ -34,7 +34,7 @@ class Election extends React.Component {
     this.propositions = [];
     this.title = nextProps.election;
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
+        loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
     fetch(url)
       .then(response => {
@@ -119,7 +119,7 @@ class Election extends React.Component {
       answers: this.answers
     };
     this.setState({
-      loading: <div className="is-horizontal-center"><i className="fa fa-spinner fa-spin fa-3x" ></i></div>
+              loading: <div className="is-horizontal-center"><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
     fetch(url, {
       method: "POST",
@@ -217,7 +217,7 @@ class Election extends React.Component {
         {this.state.confirm}
         {code}
         <h1 className="title is-2 has-text-info">{this.title}</h1>
-        <h2 className="subtitle is-3 has-text-info"> {this.window} </h2>
+        <h2 className="subtitle has-text-info"> {this.window} </h2>
         {this.state.loading}
         {props}
       </div>

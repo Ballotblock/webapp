@@ -44,7 +44,7 @@ class Header extends React.Component {
             <nav className="level">
               <div className="level-left">
                 <span className="icon is-medium">
-                  <i className="fa fa-3x fa-check-square-o" aria-hidden="true"/>
+                  <i className="fas fa-check-square" aria-hidden="true" />
                 </span>&nbsp;
                 <h1 className="title level-item is-1">BallotBlock</h1>
               </div>
@@ -54,18 +54,19 @@ class Header extends React.Component {
                     <button onClick = {this.dropDownToggle} className="button is-info is-inverted is-outlined level-item" aria-hidden="true">
                       <span>&nbsp;&nbsp;Welcome {this.props.name}</span>
                       <span className="icon is-info">
-                        <i className="fa fa-angle-down" aria-hidden="true" />
+                        <i className="fas fa-angle-down" aria-hidden="true" />
                       </span>&nbsp;&nbsp;
                     </button>
                   </div>
                   <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div className="dropdown-content">
-                    <a onClick = {this.logoutEventHandler} className="dropdown-item has-text-info">&nbsp;&nbsp;Logout</a>
+                    <div className="dropdown-content">
+                      <a onClick = {this.logoutEventHandler} className="dropdown-item has-text-info">&nbsp;&nbsp;Logout</a>
+                    </div>
                   </div>
                 </div>
               </div>
+            </nav>
             </div>
-            </nav></div>
           </div>
         </div>
       );

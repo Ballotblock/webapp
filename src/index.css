@@ -54,6 +54,9 @@ Class is added to a <tr> row when a choice is selected for a specific propositio
   background-color: #cce6ff;
 }
 
+.selectedRow { background-color: #cce6ff; }
+
+
 abbr{
   font-weight: bold;
 }
@@ -125,5 +128,5 @@ div.message-header { background-color: #209cee; }
 article.message { box-shadow: 0 0 1px black; background-color: whitesmoke;}
 div.back { background-color: #f0f8ff; }
 div.section { padding-left: 1%; }
-h2.subtitle { padding-left: 0%; }
+
 p.panel-heading { background-color: #209cee; }

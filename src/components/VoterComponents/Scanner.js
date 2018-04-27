@@ -8,7 +8,8 @@ class Scanner extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            msg: ""
+            msg: "",
+            color: ""
         }
         this.key = this.props.title + "/" + this.props.voter
     }
@@ -21,12 +22,14 @@ class Scanner extends React.Component {
         if(data){
             if(data == this.key){
                 this.setState({
-                    msg:"Your vote is original!"
+                    msg:"Your vote is original!",
+                    color: "has-text-success"
                 })
             }else
             {
                this.setState({
-                msg:"QR code does not match vote"
+                msg:"QR code does not match vote",
+                   color: "has-text-danger"
                })
             }
         }
@@ -45,7 +48,7 @@ class Scanner extends React.Component {
             <div> 
                 <p> Scan your QR code down below:
                 </p>
-                <p className="has-text-danger">
+                <p className={this.state.color}>
                 {this.state.msg}
                 </p>
                 <QrReader

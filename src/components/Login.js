@@ -3,7 +3,6 @@ import Content from "./VoterComponents/Content";
 import Organizer from "../components/OrganizerComponents/Organizer"
 import * as Servers from './settings'
 import Cookies from 'js-cookie';
-import 'font-awesome/css/font-awesome.min.css';
 
 import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
@@ -85,7 +84,7 @@ class Login extends React.Component {
       password: password
     };
     this.setState({
-      loading:  <i className="fa fa-spinner fa-spin fa-3x"/>
+      loading:  <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
     fetch(url, {
       method: "POST",
@@ -131,7 +130,7 @@ class Login extends React.Component {
       account_type: accountType
     };
     this.setState({
-      loading: <i className="fa fa-spinner fa-spin fa-3x"/>
+      loading: <div><i className="fas fa-spinner fa-spin " style={ {'font-size':'3em'} } ></i></div>
     });
 
     fetch(url, {
@@ -154,13 +153,11 @@ class Login extends React.Component {
   // the component that is rendered if the voter is authorized
   renderContent = function() {
     return <Redirect to="/voter/Current Elections" />
-    //return <Content name={this.state.name} voterId={this.state.name} />;
   };
 
   //the componnents that is rendered if the election organizer is authorized
   renderOrganizer = function() {
     return <Redirect to="/organizer/Create" />
-    //return <Organizer name={this.state.name} organizerId={this.state.name}></Organizer>
   }
 
   renderLogin = function() {
@@ -170,7 +167,7 @@ class Login extends React.Component {
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
               <span className="icon is-large is-info is-inverted">
-                  <i className="fa fa-check-square-o fa-3x" aria-hidden="true"/>
+                  <i className="fas fa-check-square" aria-hidden="true"/>
               </span>
                 <h1 className="title is-1">BallotBlock</h1>
               <div className="box">
@@ -182,9 +179,8 @@ class Login extends React.Component {
                         className="input is-large"
                         ref="user"
                         placeholder="Username"
-                        id="one"
-                        onKeyPress={this.listenKeyPress}
                         autoFocus
+                        onKeyPress={this.listenKeyPress}
                       />
                     </div>
                   </div>
@@ -205,12 +201,13 @@ class Login extends React.Component {
                     className="button is-info is-outlined is-medium is-fullwidth"
                     onClick={this.loginClick}>Login
                   </a>
-                  &nbsp;
                   <p className="has-text-danger" id="error">&nbsp;&nbsp;{this.state.loginError}</p>
-                    <a className="has-text-grey">Need an account? </a>
-                    <a onClick={this.signUp} className="has-text-info is-inverted">Sign Up</a>{" "}
-                    &nbsp;&nbsp;
                 </form>
+                  <p className="has-text-grey">
+                      <a className="has-text-grey">Need an account? </a>
+                      <a  className="has-text-info is-inverted" onClick={this.signUp}>Sign Up</a>{" "}
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </p>
               </div>
             </div>
           </div>
@@ -226,7 +223,7 @@ class Login extends React.Component {
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
               <span className="icon is-large">
-                <i className="fa fa-check-square-o fa-3x" aria-hidden="true"/>
+                <i className="fas fa-check-square" aria-hidden="true"/>
               </span>
               <h1 className="title is-1">BallotBlock</h1>
                 <h2 className="subtitle">Create Account</h2>
@@ -280,10 +277,12 @@ class Login extends React.Component {
                   <a className="button is-block is-info is-outlined is-medium is-fullwidth" onClick={this.createAccountClick}>Create Account</a>
                   &nbsp;
                   <p className="has-text-danger">{this.state.signUpError}</p>
-                    <a className="">Already have an account? </a>
-                    <a onClick={this.haveAccount} className="has-text-info is-inverted">Sign In</a>{" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </form>
+                  <p className="has-text-grey">
+                    <a className="has-text-grey">Already have an account? </a>
+                    <a  className="has-text-info is-inverted" onClick={this.haveAccount}>Sign In</a>{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </p>
               </div>
             </div>
           </div>
