@@ -131,7 +131,6 @@ class Content extends React.Component {
           }
         }
 
-
         if(this.electionTitle){
           //console.log(this.electionTitle)
           // check to make sure there is an election in election list
