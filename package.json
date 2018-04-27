@@ -2,7 +2,6 @@
   "name": "ballots",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://authenticationserv.azurewebsites.net",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",

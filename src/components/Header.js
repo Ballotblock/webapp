@@ -38,35 +38,27 @@ class Header extends React.Component {
       return <Redirect to="/" />;
     } else {
       return (
-        <div className="hero is-info">
-          <div className="hero-body">
-            <div className="container">
-            <nav className="level">
-              <div className="level-left">
-                <span className="icon is-medium">
-                  <i className="fa fa-3x fa-check-square-o" aria-hidden="true"/>
-                </span>&nbsp;
-                <h1 className="title level-item is-1">BallotBlock</h1>
+        <div className="section container">
+          <nav className="level">
+            <div className="">
+              <h1 className="title level-item is-1">BallotBlock</h1>
+            </div>
+            <div className= {"dropdown " + this.state.toggle}>
+              <div className="dropdown-trigger">
+                <button onClick = {this.dropDownToggle} className="button">
+                  <span>Welcome {this.props.name}</span>
+                  <span className="icon is-small">
+                    <i className="fas fa-angle-down" aria-hidden="true" />
+                  </span>
+                </button>
               </div>
-              <div className="level-right">
-                <div className= {"dropdown is-hoverable"}>
-                  <div className="dropdown-trigger">
-                    <button onClick = {this.dropDownToggle} className="button is-info is-inverted is-outlined level-item" aria-hidden="true">
-                      <span>&nbsp;&nbsp;Welcome {this.props.name}</span>
-                      <span className="icon is-small is-info">
-                        <i className="far fa-angle-down" aria-hidden="true" />
-                      </span>&nbsp;&nbsp;
-                    </button>
-                  </div>
-                  <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div className="dropdown-content">
-                    <a onClick = {this.logoutEventHandler} className="dropdown-item has-text-info">&nbsp;&nbsp;Logout</a>
-                  </div>
+              <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                <div className="dropdown-content">
+                  <a onClick = {this.logoutEventHandler} className="dropdown-item">Logout</a>
                 </div>
               </div>
             </div>
-            </nav></div>
-          </div>
+          </nav>
         </div>
       );
     }
